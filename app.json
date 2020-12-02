@@ -1,7 +1,6 @@
 {
   "expo": {
     "name": "hutkaapp.com",
-    "slug": "hutkaapp.com",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,6 +28,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": ""
   }
 }
