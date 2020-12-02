@@ -1,14 +1,28 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import React, {useState, } from 'react';
+import { Button, Platform, StyleSheet, TextInput, View, Text } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+// import { Text, View } from '../../components/Themed';
 
-export default function TabTwoScreen() {
+export default  () => {
+  const [kmlPath, setKmlPath] = useState("");
+
+
+  // const loadKml = async() => {
+    
+  // }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <TextInput
+      style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+      onChangeText={text => setKmlPath(text)}
+      placeholder="Enter Url of kml to this line"
+      value={kmlPath}
+    />
+    {/* <Button title="Enter"></Button> */}
+    <Text>{Platform.OS + " ver."+ Platform.Version + " "}</Text>
       <EditScreenInfo path="/screens/TabTwoScreen.js" />
     </View>
   );

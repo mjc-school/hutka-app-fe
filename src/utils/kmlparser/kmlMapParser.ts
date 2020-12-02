@@ -1,8 +1,6 @@
 import GoogleMapReact from 'google-map-react';
 
-import AAA from 'google-maps';
-
-import {Client} from "@googlemaps/google-maps-services-js";
+import { kml } from "@tmcw/togeojson";
 
 // import { kml } from "@tmcw/togeojson";
 

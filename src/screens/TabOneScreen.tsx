@@ -1,21 +1,22 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
-import MapView from '../../components/Map/MapView';
+import { StyleSheet, Text, View, Button, ScrollView, Dimensions } from 'react-native';
 
+import MapView from 'react-native-maps';
 
 
 import EditScreenInfo from '../../components/EditScreenInfo';
-import {MyMapComponent} from '../../components/Map';
+import {MyMap} from '../../components/Map';
 
 
 export default function TabOneScreen() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Tab One</Text>
       <View style={styles.separator} lightColor={"#eee"} darkColor="rgba(255,255,255,0.1)" />
 
       <Button title="Arr" onPress={()=>{}}/>
-      <MapView defaultZoom={15} region={{ latitude: 48.86, longitude: 2.34 }}  />
+
+      <MapView style={styles.mapStyle} defaultZoom={15} region={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1  }} initialRegion={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1 }} />
 
       
 
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    height: 200,
   },
   title: {
     fontSize: 20,
@@ -38,5 +40,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  mapStyle: {
+    width: Dimensions.get('window').width - 20,
+    height: Dimensions.get('window').height - 20 ,
   },
 });

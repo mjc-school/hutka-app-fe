@@ -1,24 +1,26 @@
-import * as React from 'react';
-import { compose, withProps } from "recompose";
-import MapView, { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-import { View } from 'react-native';
+import React from 'react';
+import MapView from 'react-native-maps';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
+export default class MyMap extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <MapView style={styles.mapStyle} />
+      </View>
+    );
+  }
+}
 
-
-export const MyMapComponent = compose(
-  withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <View style={{ height: `100%` }} />,
-    containerElement: <View style={{ height: `400px` }} />,
-    mapElement: <View style={{ height: `100%` }} />,
-  }),
-  withScriptjs,
-  withGoogleMap
-)((props:any) =>(
-  <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: -34.397, lng: 150.644 }}
-  >
-    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
-  </GoogleMap>
-))
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mapStyle: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+});
