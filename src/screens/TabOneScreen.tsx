@@ -1,26 +1,32 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, Dimensions } from 'react-native';
 
-import MapView from 'react-native-maps';
+import MapView, {Geojson} from 'react-native-maps';
 
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import {MyMap} from '../../components/Map';
+import EditScreenInfo from '../components/EditScreenInfo';
+import MyMap from '../components/Map/map.component';
+// import { KmlLayer, Marker } from "react-google-maps";
+
 
 
 export default function TabOneScreen() {
+  
+
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Tab One</Text>
       <View style={styles.separator} lightColor={"#eee"} darkColor="rgba(255,255,255,0.1)" />
 
-      <Button title="Arr" onPress={()=>{}}/>
+      <EditScreenInfo path="/screens/TabOneScreen.js" />
 
-      <MapView style={styles.mapStyle} defaultZoom={15} region={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1  }} initialRegion={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1 }} />
+
+     
+<MyMap></MyMap>
 
       
 
-      <EditScreenInfo path="/screens/TabOneScreen.js" />
     </ScrollView>
   );
 }
@@ -28,9 +34,10 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     alignItems: 'center',
     justifyContent: 'center',
-    height: 200,
+    height: '10%',
   },
   title: {
     fontSize: 20,

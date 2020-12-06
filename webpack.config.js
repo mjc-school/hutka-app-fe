@@ -7,6 +7,5 @@ module.exports = async function (env, argv) {
   config.resolve.alias = { ...config.resolve.alias,
     'react-native-maps': 'react-native-web-maps',
   }
-  console.log(config.resolve);
   return config;
 };
