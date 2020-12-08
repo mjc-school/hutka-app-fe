@@ -44,13 +44,13 @@ export default function MyMap() {
       strokeWidth={2}
     />
         </MapView>
-        {/* <MapView style={styles.mapStyle} defaultZoom={6} region={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1  }} initialRegion={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1 }} >
+        <MapView style={styles.mapStyle} defaultZoom={6} region={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1  }} initialRegion={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1 }} >
 
         <KmlLayer
       url="https://www.google.com/maps/d/kml?mid=1EZOTjkxsR29lvHC7IPz6E2K-g41awFmA&forcekml=1"
       options={{ preserveViewport: true }}
     />
-    </MapView> */}
+    </MapView>
     </View>
   )
 }
