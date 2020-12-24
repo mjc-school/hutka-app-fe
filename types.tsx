@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
+  Quiz: string;
 };
 
 export type BottomTabParamList = {

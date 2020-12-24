@@ -4,6 +4,12 @@ export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
+      Quiz:{
+        screens: {
+          QuizConfirmation: 'confirmation',
+          Quiz: 'quiz',
+        },
+      },
       Root: {
         screens: {
           TabOne: {

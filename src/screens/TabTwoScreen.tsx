@@ -1,6 +1,5 @@
 import React, {useState, } from 'react';
 import { Button, Platform, StyleSheet, TextInput, View, Text } from 'react-native';
-import App from '../examples/AnimatedViews';
 
 
 
@@ -25,7 +24,7 @@ export default () => {
     />*/}
     {/* {kmlMarkup} */}
     {/* <Button title="Enter"></Button> */}
-    <App></App>
+   
     {/* <Text>{Platform.OS + " ver."+ Platform.Version + " "}</Text>
       <EditScreenInfo path="/screens/TabTwoScreen.js" /> */}
     </View>
