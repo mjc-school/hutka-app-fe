@@ -1,67 +1,80 @@
-import React from 'react';
-import MapView, {Marker, Polyline} from 'react-native-maps';
+import React from "react";
+import MapView, { Marker, Polyline } from "react-native-maps";
 
-export const makeOverlays = features => {
+
+
+export const makeOverlays = (features: GeoJSON.Feature<GeoJSON.Geometry>[]) => {
   const points = features
     .filter(
-      f =>
+      (f) =>
         f.geometry &&
-        (f.geometry.type === 'Point' || f.geometry.type === 'MultiPoint')
+        (f.geometry.type === "Point" || f.geometry.type === "MultiPoint")
     )
-    .map(feature =>
-      makeCoordinates(feature).map(coordinates =>
+    .map((feature) =>
+      (makeCoordinates(feature) as GeoPosition[]).map((coordinates) =>
         makeOverlay(coordinates, feature)
       )
     )
     .reduce(flatten, [])
-    .map(overlay => ({ ...overlay, type: 'point' }));
+    .map((overlay: Overlay) => ({ ...overlay, type: "point" }));
 
   const lines = features
     .filter(
-      f =>
+      (f) =>
         f.geometry &&
-        (f.geometry.type === 'LineString' ||
-          f.geometry.type === 'MultiLineString')
+        (f.geometry.type === "LineString" ||
+          f.geometry.type === "MultiLineString")
     )
-    .map(feature =>
-      makeCoordinates(feature).map(coordinates =>
+    .map((feature) =>
+      (makeCoordinates(feature) as GeoPosition[]).map((coordinates) =>
         makeOverlay(coordinates, feature)
       )
     )
     .reduce(flatten, [])
-    .map(overlay => ({ ...overlay, type: 'polyline' }));
+    .map((overlay: Overlay) => ({ ...overlay, type: "polyline" }));
 
   const multipolygons = features
-    .filter(f => f.geometry && f.geometry.type === 'MultiPolygon')
-    .map(feature =>
-      makeCoordinates(feature).map(coordinates =>
+    .filter((f) => f.geometry && f.geometry.type === "MultiPolygon")
+    .map((feature) =>
+      (makeCoordinates(feature) as GeoPosition[]).map((coordinates) =>
         makeOverlay(coordinates, feature)
       )
     )
     .reduce(flatten, []);
 
   const polygons = features
-    .filter(f => f.geometry && f.geometry.type === 'Polygon')
-    .map(feature => makeOverlay(makeCoordinates(feature), feature))
-    .reduce(flatten, [])
+    .filter((f) => f.geometry && f.geometry.type === "Polygon")
+    .map((feature) => makeOverlay(makeCoordinates(feature) as GeoPosition[], feature))
+    // .reduce(flatten, [])
     .concat(multipolygons)
-    .map(overlay => ({ ...overlay, type: 'polygon' }));
+    .map((overlay: Overlay) => ({ ...overlay, type: "polygon" }));
 
-  return points.concat(lines).concat(polygons);
+  return points.concat(lines).concat(polygons) as Overlay[];
 };
 
-const flatten = (prev, curr) => prev.concat(curr);
+const flatten = <T extends unknown>(prev: T[], curr: T[]) => prev.concat(curr);
 
-const makeOverlay = (coordinates, feature) => {
-  let overlay = {
+interface Overlay {
+  feature: GeoJSON.Feature<GeoJSON.Geometry>;
+  coordinates: GeoPosition[] | GeoPosition | null;
+  holes?: GeoPosition[];
+  type?: 'point' | 'polyline' | 'polygon';
+}
+
+const makeOverlay = (
+  coordinates: GeoPosition[] | GeoPosition,
+  feature: GeoJSON.Feature<GeoJSON.Geometry>
+) => {
+  const overlay: Overlay = {
+    coordinates: null,
     feature,
   };
   if (
-    feature.geometry.type === 'Polygon' ||
-    feature.geometry.type === 'MultiPolygon'
+    feature.geometry.type === "Polygon" ||
+    feature.geometry.type === "MultiPolygon"
   ) {
-    overlay.coordinates = coordinates[0];
-    if (coordinates.length > 1) {
+    overlay.coordinates = (coordinates as GeoPosition[])[0];
+    if (Array.isArray(coordinates) && coordinates.length > 1) {
       overlay.holes = coordinates.slice(1);
     }
   } else {
@@ -70,46 +83,62 @@ const makeOverlay = (coordinates, feature) => {
   return overlay;
 };
 
-const makePoint = c => ({ latitude: c[1], longitude: c[0], lat: c[1], lng: c[0] });
+interface GeoPosition {
+  latitude: number;
+  longitude: number;
+  lat: number;
+  lng: number;
+}
 
-const makeLine = l => l.map(makePoint);
+const makePoint = (c: GeoJSON.Position): GeoPosition => ({
+  latitude: c[1],
+  longitude: c[0],
+  lat: c[1],
+  lng: c[0],
+});
 
-const makeCoordinates = feature => {
+const makeLine = (l: GeoJSON.Position[]) => l.map(makePoint);
+
+const makeCoordinates = (feature: GeoJSON.Feature<GeoJSON.Geometry>) => {
   const g = feature.geometry;
-  if (g.type === 'Point') {
+  if (g.type === "Point") {
     return [makePoint(g.coordinates)];
-  } else if (g.type === 'MultiPoint') {
+  } else if (g.type === "MultiPoint") {
     return g.coordinates.map(makePoint);
-  } else if (g.type === 'LineString') {
+  } else if (g.type === "LineString") {
     return [makeLine(g.coordinates)];
-  } else if (g.type === 'MultiLineString') {
+  } else if (g.type === "MultiLineString") {
     return g.coordinates.map(makeLine);
-  } else if (g.type === 'Polygon') {
+  } else if (g.type === "Polygon") {
     return g.coordinates.map(makeLine);
-  } else if (g.type === 'MultiPolygon') {
-    return g.coordinates.map(p => p.map(makeLine));
+  } else if (g.type === "MultiPolygon") {
+    return g.coordinates.map((p) => p.map(makeLine));
   } else {
     return [];
   }
 };
 
-const Geojson = props => {
-    const overlays = makeOverlays(Array.from(props.geojson.features));
+const Geojson = (props: any) => {
+  const overlays = makeOverlays(Array.from(props.geojson.features));
 
-    
+  const onMarkerPress = React.useCallback((overlay: Overlay) => {
+    console.log(overlay.feature.properties?.name);
+  }, []);
+
   return (
     <>
       {overlays.map((overlay, index) => {
-        if (overlay.type === 'point') {
-                    return (
+        if (overlay.type === "point") {
+          return (
             <MapView.Marker
               key={index}
               coordinate={overlay.coordinates}
+              onPress={() => onMarkerPress(overlay)}
               {...overlay.feature.properties}
             />
           );
         }
-        if (overlay.type === 'polyline') {
+        if (overlay.type === "polyline") {
           return (
             <MapView.Polyline
               key={index}
