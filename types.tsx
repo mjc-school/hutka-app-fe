@@ -1,7 +1,7 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
-  Quiz: string;
+  
 };
 
 export type BottomTabParamList = {
@@ -9,8 +9,9 @@ export type BottomTabParamList = {
   TabTwo: undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type QuizNavigation = {
+  QuizConfirmation: string;
+  Quiz: string;
 };
 
 export type TabTwoParamList = {

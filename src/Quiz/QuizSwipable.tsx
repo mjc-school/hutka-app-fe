@@ -1,169 +1,128 @@
-import React, { Component } from 'react'
+import React, { useState, useRef } from 'react'
 import Swiper from 'react-native-deck-swiper'
-import { StyleSheet, Text, View } from 'react-native';
-import Button from '../components/StyledButton'
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { IconButton, ImageCard, IconCard, InputCard, StyledButton } from '../components';
+import { Colors } from '../common';
+import { ProgressBar } from './ProgressBar';
 
-// demo purposes only
-function * range (start, end) {
-  for (let i = start; i <= end; i++) {
-    yield i
-  }
-}
 
-export class Quiz extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      cards: [...range(1, 50)],
-      swipedAllCards: false,
-      swipeDirection: '',
-      cardIndex: 0
-    }
-  }
+export default () => {
 
-  renderCard = (card, index) => {
-    return (
-      <View style={styles.card}>
-        <Text style={styles.text}>{card} - {index}</Text>
-      </View>
-    )
-  };
+  const [swipedAllCards, setSwipedAllCards] = useState(false);
+ const [cardIndex, setCardIndex] = useState(0);
+ const [swipeDirection, setSwipeDirection] = useState('');
 
-  onSwiped = (type) => {
+ const swiperRef = useRef();
+ 
+  const onSwiped = (type) => {
     console.log(`on swiped ${type}`)
   }
 
-  onSwipedAllCards = () => {
-    this.setState({
-      swipedAllCards: true
-    })
+  const Examplecard = {
+    type: "imageCard",
+    imageUri: 'http://img.tyt.by/n/regiony/06/9/shchuchynshchyna_20201020_tutby_gord-8364.jpg',
+    caption: "Хочешь отдохнуть на природе?",
+    parameter: "nature",
+    result: undefined,
   };
+  const cards = ['ImageCard', 'InputCard', 'IconCard', ];
 
-  swipeLeft = () => {
-    this.swiper.swipeLeft()
+  const renderCard = (card) => {
+    if(card === 'InputCard'){
+      return <InputCard/>
+    }
+    if(card === 'IconCard'){
+      return <IconCard/>
+    }
+    if(card === 'ImageCard'){
+      return <ImageCard imageUri={Examplecard.imageUri} caption={Examplecard.caption}/>
+    }
+    return (<View></View>)
+  }
+
+  const onSwipedAllCards = () => setSwipedAllCards(false);
+
+  const swipeLeft = () => {
+    swiperRef.swipeLeft()
   };
+  const onGoToDashboard = () =>{
+    navigation.navigate('Dashboard');
+  }
 
-  render () {
     return (
       <View style={styles.container}>
-        <Button/>
+      
+        <ProgressBar maxItems={cards.length} currentItem={cardIndex}/>
+        <View style={styles.cardContainer}>
         <Swiper
-          ref={swiper => {
-            this.swiper = swiper
-          }}
-          onSwiped={() => this.onSwiped('general')}
-          onSwipedLeft={() => this.onSwiped('left')}
-          onSwipedRight={() => this.onSwiped('right')}
-          onSwipedTop={() => this.onSwiped('top')}
-          onSwipedBottom={() => this.onSwiped('bottom')}
-          onTapCard={this.swipeLeft}
-          cards={this.state.cards}
-          cardIndex={this.state.cardIndex}
-          cardVerticalMargin={80}
-          renderCard={this.renderCard}
-          onSwipedAll={this.onSwipedAllCards}
-          stackSize={3}
-          stackSeparation={15}
-          overlayLabels={{
-            bottom: {
-              title: 'BLEAH',
-              style: {
-                label: {
-                  backgroundColor: 'black',
-                  borderColor: 'black',
-                  color: 'white',
-                  borderWidth: 1
-                },
-                wrapper: {
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }
-              }
-            },
-            left: {
-              title: 'NOPE',
-              style: {
-                label: {
-                  backgroundColor: 'black',
-                  borderColor: 'black',
-                  color: 'white',
-                  borderWidth: 1
-                },
-                wrapper: {
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  justifyContent: 'flex-start',
-                  marginTop: 30,
-                  marginLeft: -30
-                }
-              }
-            },
-            right: {
-              title: 'LIKE',
-              style: {
-                label: {
-                  backgroundColor: 'black',
-                  borderColor: 'black',
-                  color: 'white',
-                  borderWidth: 1
-                },
-                wrapper: {
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                  marginTop: 30,
-                  marginLeft: 30
-                }
-              }
-            },
-            top: {
-              title: 'SUPER LIKE',
-              style: {
-                label: {
-                  backgroundColor: 'black',
-                  borderColor: 'black',
-                  color: 'white',
-                  borderWidth: 1
-                },
-                wrapper: {
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }
-              }
-            }
-          }}
-          animateOverlayLabelsOpacity
-          animateCardOpacity
-          swipeBackCard
-        >
-          <Button onPress={() => this.swiper.swipeBack()} title='Swipe Back' />
+            ref={swiperRef}
+            cards={cards}
+            renderCard={renderCard}
+            onSwiped={(cardIndex) => {setCardIndex(cardIndex)}}
+            onSwipedAll={() => {setSwipedAllCards(true)}}
+            cardIndex={0}
+            containerStyle={{
+              flex: 1,
+              maxHeight: '45%',
+              maxWidth: '100%',
+              alignSelf: 'baseline',
+            }}
+            backgroundColor={Colors.greyLight}
+            disableTopSwipe
+            disableBottomSwipe
+
+            stackSize= {1}>
         </Swiper>
+        </View>
+
+        <View style={styles.buttonContainer}>
+            <IconButton color={"#e76b6b"} name="heart" iconType="FontAwesome"/>
+            <IconButton color={"#000000"} name="close" iconType="EvilIcons"/>
+          </View>
+        
+          <View style={{alignSelf: 'center', top: '80%'}}>
+            <StyledButton  buttonStyle='transparent' text='Пропустить опрос' onPress={onGoToDashboard}/>
+          </View>
+       
       </View>
     )
-  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF'
+    backgroundColor: Colors.background,
+    justifyContent: 'flex-start',
+    alignContent:'center',
+    alignItems: 'center',
+    flexDirection: "column",
+  },
+  cardContainer:{
+    top: '-5%',
+    maxWidth: '30%',
+    alignSelf: 'baseline',
   },
   card: {
-    flex: 1,
-    maxHeight: '50%',
     maxWidth: '50%',
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: '#E8E8E8',
     justifyContent: 'center',
     backgroundColor: 'white'
   },
-  text: {
-    textAlign: 'center',
-    fontSize: 50,
-    backgroundColor: 'transparent'
+  buttonContainer:{
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    minWidth: '35%',
+
+  maxHeight: '10%',
+    alignItems: 'center',
+    alignSelf: 'center',
+    top: '80%'
+  },
+  text:{
+    textAlign: "center",
+    color: Colors.basic
   },
   done: {
     textAlign: 'center',

@@ -22,4 +22,24 @@ const H6: StyleProp<TextStyle> = {
     letterSpacing: 0.3
 };
 
-export default {Large, H6}
+const H7: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: "normal",
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 18,
+    textAlign: 'center',
+    letterSpacing: '-0.24'
+};
+
+const H1: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: "normal",
+    fontWeight: '600',
+    fontSize: 22,
+    lineHeight: 28,
+    textAlign: 'center',
+    letterSpacing: 0.34
+};
+
+export default {Large, H6, H1, H7}

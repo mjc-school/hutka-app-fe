@@ -1,4 +1,3 @@
-import { QuizScreen } from "./QuizSwipable";
-
+export { Quiz } from "./Quiz";
 export {QuizConfirmation} from './QuizConfirmation'
-export {Quiz} from './QuizSwipable'
+export {default as QuizSwipable} from './QuizSwipable'

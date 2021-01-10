@@ -7,12 +7,12 @@ import cn from 'react-native-classnames';
 
 
 export default function Button(props: ButtonProps) {
-    const {onPress, text, buttonStyle, textStyle} = props;
-    const containerStyles = cn(styles, "container", buttonStyle);
+    const {onPress, text, buttonStyle, textStyle, containerStyles} = props;
+    const ownContainerStyles = {...cn(styles, "container", buttonStyle)};
     const textStyles =cn(styles, text, textStyle);
 
   return (
-        <TouchableOpacity  style={containerStyles} onPress={onPress}>
+        <TouchableOpacity  style={ownContainerStyles} onPress={onPress}>
           <Text style={textStyles}>
           {text}
           </Text>

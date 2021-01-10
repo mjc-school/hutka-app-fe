@@ -1,5 +1,9 @@
 import React, {useState, } from 'react';
 import { Button, Platform, StyleSheet, TextInput, View, Text } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+
+import { RouteCard } from '../components';
+import { Colors } from '../common';
 
 
 
@@ -14,19 +18,14 @@ export default () => {
   // }
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-      {/* <TextInput
-      style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-      onChangeText={text => setKmlPath(text)}
-      placeholder="Enter Url of kml to this line"
-      value={kmlPath} 
-    />*/}
-    {/* {kmlMarkup} */}
-    {/* <Button title="Enter"></Button> */}
+      <Text style={styles.title}>Tab Two</Text>
+      <ScrollView>
+        <RouteCard />
+        <RouteCard />
+      </ScrollView>
    
-    {/* <Text>{Platform.OS + " ver."+ Platform.Version + " "}</Text>
-      <EditScreenInfo path="/screens/TabTwoScreen.js" /> */}
+    <Text>{Platform.OS + " ver."+ Platform.Version + " "}</Text>
+      
     </View>
   );
 }
@@ -36,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: Colors.background,
   },
   title: {
     fontSize: 20,

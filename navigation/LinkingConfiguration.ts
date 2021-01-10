@@ -4,10 +4,20 @@ export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      Quiz:{
+      QuizStack:{
         screens: {
           QuizConfirmation: 'confirmation',
           Quiz: 'quiz',
+        },
+      },
+      Dashboard: {
+        screens: {
+          Dashboard: {
+            screens: {
+              Main: 'main',
+              Map: 'map'
+            }
+          },
         },
       },
       Root: {

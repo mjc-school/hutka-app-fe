@@ -1,51 +1,53 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { Colors, TextStyles } from '../../../common';
-import { ButtonProps } from './types';
 import cn from 'react-native-classnames';
 
+import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
+import { Colors, TextStyles } from '../../../common';
+import { ImageCardProps } from './types';
+import { IconButton } from '../../IconButton';
+import { CommonCardStyles } from '../';
 
 
-export default function Button(props: ButtonProps) {
-    const {onPress, text, buttonStyle, textStyle} = props;
-    const containerStyles = cn(styles, "container", buttonStyle);
-    const textStyles =cn(styles, text, textStyle);
+export default (props: ImageCardProps) => {
+    const {imageUri, caption} = props;
 
   return (
-        <TouchableOpacity  style={containerStyles} onPress={onPress}>
-          <Text style={textStyles}>
-          {text}
-          </Text>
-        </TouchableOpacity>
+        <View style={CommonCardStyles.container}>
+            <Image style={styles.imageStyles} source={{uri: imageUri}} />
+          <View style={styles.textContainer}>
+            <Text style={styles.textStyles}>
+            {caption}
+            </Text>
+
+          </View>
+        </View>
   );
 }
 
-const styles = ({
-  container: {
-    minHeight: 44,
-    minWidth: 343,
-    flex: 0, 
-    justifyContent: 'center',
+const styles = StyleSheet.create({
+  buttonContainer:{
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    minWidth: '35%',
+  },
+  imageStyles:{
+    flex:1,
+    width: '100%',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    opacity: 0.85,
+
+  },
+  textContainer:{
+    flex: 1,
+    width: '100%',
+    maxHeight: '30%',
     alignItems: "center",
-  },
-  primary:{
-      backgroundColor: Colors.primary,
-      borderRadius: 8,
-    borderStyle: 'solid',
-    borderColor: Colors.border,
-    borderWidth: 1
-  },
-  secondary:{
+    justifyContent: "center",
     backgroundColor: Colors.secondaryButton,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: 8,
-},
-transparent:{
-  borderColor: Colors.secondaryButton,
-  borderStyle: 'solid',
-  borderWidth: 1,
-  borderRadius: 8,
-},
-  text: TextStyles.H6
-});
+    borderBottomStartRadius: 16,
+    borderBottomEndRadius: 16,
+  },
+  textStyles: TextStyles.H1
+}); 

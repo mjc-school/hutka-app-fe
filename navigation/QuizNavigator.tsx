@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import {Quiz, QuizConfirmation} from '../src/Quiz';
+import {Quiz, QuizSwipable, QuizConfirmation} from '../src/Quiz';
+import TabTwoScreen from '../src/screens/TabTwoScreen';
 
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,7 +17,7 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const QuizStack = createBottomTabNavigator<TabOneParamList>();
+const QuizStack = createStackNavigator<TabOneParamList>();
 
 export default function TabOneNavigator() {
   return (
@@ -24,13 +25,14 @@ export default function TabOneNavigator() {
       <QuizStack.Screen
         name="QuizConfirmation"
 
-        component={QuizConfirmation}
+        // component={QuizConfirmation}
+        component={TabTwoScreen}
         options={{headerShown:false}}
       />
         <QuizStack.Screen
         name="Quiz"
-        component={Quiz}
-        options={{ headerTitle: 'Tab One Title' }}
+        component={QuizSwipable}
+        options={{headerShown:false}}
       />
     </QuizStack.Navigator>
   );

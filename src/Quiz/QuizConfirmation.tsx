@@ -12,12 +12,17 @@ import { CommonActions, useLinkProps } from '@react-navigation/native';
 
 
 export function QuizConfirmation(props: any) {
-    const {onPress, text, backgroundStyle, textStyle} = props;
+    const {onPress, text, backgroundStyle, textStyle, navigation} = props;
     const containerStyles = cn(styles, "container");
     const textStyles =cn(styles, text, textStyle );
     const buttonContainerStyles = cn(styles, 'buttonContainer');
 
-    const { onGoToQuiz } = useLinkProps({ to: '/quiz'});
+    const onStart = () => {
+      navigation.navigate('Quiz')
+    };
+    const onGoToDashboard = () => {
+      navigation.navigate('Dashboard');
+    };
 
 
   return (
@@ -32,11 +37,9 @@ export function QuizConfirmation(props: any) {
           Для начала, давай пройдем опрос, и мы подберем для тебя подходящие маршруты
           </Text>
           <View style={buttonContainerStyles}>
-          <StyledButton buttonStyle='primary' text='Начать' onPress={onGoToQuiz}/>
-          <StyledButton buttonStyle='transparent' text='Пропустить опрос'/>
-
-          </View>
-         
+            <StyledButton buttonStyle='primary' text='Начать' onPress={onStart}/>
+            <StyledButton buttonStyle='transparent' text='Пропустить опрос' onPress={onGoToDashboard}/>
+          </View>  
         </View>
   );
 }
@@ -48,6 +51,7 @@ const styles = ({
     justifyContent: 'space-around',
     alignItems: 'center',
     flexDirection: "column",
+    backgroundColor: Colors.background,
   },
   yellow:{
       backgroundColor: Colors.primary,
