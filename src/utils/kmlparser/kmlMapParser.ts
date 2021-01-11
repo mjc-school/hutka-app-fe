@@ -1,9 +1,7 @@
-
-
 import { kml } from "@tmcw/togeojson";
 
-import DOMParser from 'react-native-html-parser';
-
+import DOMParser from "react-native-html-parser";
+import ToGeo from "./togeojson";
 
 const html = `<?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -47,19 +45,14 @@ const html = `<?xml version="1.0" encoding="utf-8"?>
       </Polygon>
     </Placemark>
   </Document>
-</kml>`;    
+</kml>`;
 const parser = new DOMParser.DOMParser();
-const parsed = parser.parseFromString(html, 'text/xml');
+const parsed = parser.parseFromString(html, "text/xml");
 
-console.log
-import ToGeo from "./togeojson";
+console.log;
 
 // export let kmlMarkup =  ToGeo.kml(parsed);
 // console.log(JSON.stringify(kmlMarkup, null, 2))
-
-
-
-
 
 // import {Loader, LoaderOptions} from 'google-maps';
 // // or const {Loader} = require('google-maps'); without typescript

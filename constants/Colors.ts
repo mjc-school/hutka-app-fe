@@ -10,4 +10,4 @@ export default {
   accent: "#2F80ED",
   positive: "#09BA65",
   negative: "#FF3347",
-}
+};

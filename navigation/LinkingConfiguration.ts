@@ -1,22 +1,22 @@
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
 
 export default {
-  prefixes: [Linking.makeUrl('/')],
+  prefixes: [Linking.makeUrl("/")],
   config: {
     screens: {
-      QuizStack:{
+      QuizStack: {
         screens: {
-          QuizConfirmation: 'confirmation',
-          Quiz: 'quiz',
+          QuizConfirmation: "confirmation",
+          Quiz: "quiz",
         },
       },
       Dashboard: {
         screens: {
           Dashboard: {
             screens: {
-              Main: 'main',
-              Map: 'map'
-            }
+              Main: "main",
+              Map: "map",
+            },
           },
         },
       },
@@ -24,17 +24,17 @@ export default {
         screens: {
           TabOne: {
             screens: {
-              TabOneScreen: 'one',
+              TabOneScreen: "one",
             },
           },
           TabTwo: {
             screens: {
-              TabTwoScreen: 'two',
+              TabTwoScreen: "two",
             },
           },
         },
       },
-      NotFound: '*',
+      NotFound: "*",
     },
   },
 };

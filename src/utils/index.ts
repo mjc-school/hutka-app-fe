@@ -1,1 +1,1 @@
-export * from './kmlparser'
+export * from "./kmlparser";

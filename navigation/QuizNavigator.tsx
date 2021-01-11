@@ -1,13 +1,12 @@
-import * as React from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { createStackNavigator } from '@react-navigation/stack';
+import * as React from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import {Quiz, QuizSwipable, QuizConfirmation} from '../src/Quiz';
-import TabTwoScreen from '../src/screens/TabTwoScreen';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Quiz, QuizSwipable, QuizConfirmation } from "../src/Quiz";
+import TabTwoScreen from "../src/screens/TabTwoScreen";
 
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
@@ -24,15 +23,14 @@ export default function TabOneNavigator() {
     <QuizStack.Navigator>
       <QuizStack.Screen
         name="QuizConfirmation"
-
         // component={QuizConfirmation}
         component={TabTwoScreen}
-        options={{headerShown:false}}
+        options={{ headerShown: false }}
       />
-        <QuizStack.Screen
+      <QuizStack.Screen
         name="Quiz"
         component={QuizSwipable}
-        options={{headerShown:false}}
+        options={{ headerShown: false }}
       />
     </QuizStack.Navigator>
   );

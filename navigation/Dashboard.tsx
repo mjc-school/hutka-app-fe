@@ -1,13 +1,13 @@
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../src/screens/TabOneScreen';
-import TabTwoScreen from '../src/screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import TabOneScreen from "../src/screens/TabOneScreen";
+import TabTwoScreen from "../src/screens/TabTwoScreen";
+import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -21,7 +21,7 @@ export default function BottomTabNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      >
+    >
       <BottomTab.Screen
         name="Main"
         component={TabOneNavigator}
@@ -35,15 +35,17 @@ export default function BottomTabNavigator() {
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="routes" color={color} />,
-          headerShown: false
+          headerShown: false,
         }}
       />
       <BottomTab.Screen
         name="Map"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="map-marker-outline" color={color} />,
-          headerShown: false
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="map-marker-outline" color={color} />
+          ),
+          headerShown: false,
         }}
       />
     </BottomTab.Navigator>
@@ -53,7 +55,9 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
-  return <MaterialCommunityIcons size={30} style={{ marginBottom: -3 }} {...props} />;
+  return (
+    <MaterialCommunityIcons size={30} style={{ marginBottom: -3 }} {...props} />
+  );
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
@@ -66,7 +70,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerTitle: "Tab One Title" }}
       />
     </TabOneStack.Navigator>
   );
@@ -80,7 +84,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerTitle: "Tab Two Title" }}
       />
     </TabTwoStack.Navigator>
   );
