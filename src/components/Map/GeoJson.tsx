@@ -1,7 +1,10 @@
 import React from "react";
-import MapView, { Marker, Polyline } from "react-native-maps";
+import MapView from "react-native-maps";
+import CustomMarker from "./CustomMarker";
+import MapViewMarker from "./Marker";
 
 
+import markerSvg from "./marker.svg";
 
 export const makeOverlays = (features: GeoJSON.Feature<GeoJSON.Geometry>[]) => {
   const points = features
@@ -44,7 +47,9 @@ export const makeOverlays = (features: GeoJSON.Feature<GeoJSON.Geometry>[]) => {
 
   const polygons = features
     .filter((f) => f.geometry && f.geometry.type === "Polygon")
-    .map((feature) => makeOverlay(makeCoordinates(feature) as GeoPosition[], feature))
+    .map((feature) =>
+      makeOverlay(makeCoordinates(feature) as GeoPosition[], feature)
+    )
     // .reduce(flatten, [])
     .concat(multipolygons)
     .map((overlay: Overlay) => ({ ...overlay, type: "polygon" }));
@@ -58,7 +63,7 @@ interface Overlay {
   feature: GeoJSON.Feature<GeoJSON.Geometry>;
   coordinates: GeoPosition[] | GeoPosition | null;
   holes?: GeoPosition[];
-  type?: 'point' | 'polyline' | 'polygon';
+  type?: "point" | "polyline" | "polygon";
 }
 
 const makeOverlay = (
@@ -130,19 +135,22 @@ const Geojson = (props: any) => {
       {overlays.map((overlay, index) => {
         if (overlay.type === "point") {
           return (
-            <MapView.Marker
+            <MapViewMarker
               key={index}
-              coordinate={overlay.coordinates}
+              coordinate={overlay.coordinates as any}
               onPress={() => onMarkerPress(overlay)}
-              {...overlay.feature.properties}
-            />
+              pinColor="green"
+              // {...overlay.feature.properties}
+            >
+              <CustomMarker />
+            </MapViewMarker>
           );
         }
         if (overlay.type === "polyline") {
           return (
             <MapView.Polyline
               key={index}
-              path={overlay.coordinates}
+              path={overlay.coordinates as any}
               {...overlay.feature.properties}
             />
           );

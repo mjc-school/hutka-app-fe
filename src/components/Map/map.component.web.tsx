@@ -1,27 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions, Platform } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import { KmlLayer } from "react-google-maps";
+import MapView from "react-native-maps";
+// import { KmlLayer } from "react-google-maps";
 import { Belarus, BelarusShort } from "../../utils";
 import Geojson, { makeOverlays } from "./GeoJson";
 
-import kmlMarkupParsed, { kmlTextToGeoJson } from "../../utils/kmlparser/kmlMapParser";
-import mbb from '../../utils/kmlparser/MBB';
+import kmlMarkupParsed, {
+  kmlTextToGeoJson,
+} from "../../utils/kmlparser/kmlMapParser";
 import { MapContext } from "../../screens/TabOneScreen";
+import CustomMarker from "./CustomMarker";
 
 //в оригинале мы юзаем react-google-maps которые обернуты библиотекой  react-native-web-maps
 // В нейтиве юзается react-native-maps
 export default function MyMap() {
   const [geo, setGeo] = React.useState<any>(null);
-
-  React.useEffect(() => {
-    const body = {
-      tags: ['test']
-    };
-    Promise.resolve(mbb)
-      .then(xml => kmlTextToGeoJson(xml))
-      .then(setGeo);
-  }, []);
 
   const myPlace = {
     type: "FeatureCollection",
@@ -40,41 +33,44 @@ export default function MyMap() {
   return (
     <View style={styles.container}>
       <MapContext.Consumer>
-        {route => route && (
-        <MapView
-          style={styles.mapStyle}
-          defaultZoom={6}
-          region={{
-            latitude: 53.893,
-            longitude: 27.567,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-          }}
-          initialRegion={{
-            latitude: 53.893,
-            longitude: 27.567,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-          }}
-        >
-          {/* <MapView.Marker
-    title="BAM"
-    description="Shape the future of mobile with us"
-                  coordinate={{latitude: 53.894,
-                    longitude: 27.568}}
-                  
-                /> */}
+        {(route) =>
+          route && (
+            <MapView
+              style={styles.mapStyle}
+              defaultZoom={6}
+              region={{
+                latitude: 53.893,
+                longitude: 27.567,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }}
+              initialRegion={{
+                latitude: 53.893,
+                longitude: 27.567,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }}
+            >
+              {/* <MapView.Marker
+                title="BAM"
+                description="Shape the future of mobile with us"
+                coordinate={{ latitude: 53.894, longitude: 27.568 }}
+                chi
+              >
+                <CustomMarker />
+              </MapView.Marker> */}
 
-          <Geojson
-            geojson={kmlTextToGeoJson(route.kml)}
-            strokeColor="yellow"
-            fillColor="black"
-            strokeWidth={2}
-          />
-        </MapView>
-      )}
+              <Geojson
+                geojson={kmlTextToGeoJson(route.kml)}
+                strokeColor="yellow"
+                fillColor="black"
+                strokeWidth={2}
+              />
+            </MapView>
+          )
+        }
       </MapContext.Consumer>
-      <MapView
+      {/* <MapView
         style={styles.mapStyle}
         defaultZoom={6}
         region={{
@@ -94,7 +90,7 @@ export default function MyMap() {
           url="https://www.google.com/maps/d/kml?mid=1EZOTjkxsR29lvHC7IPz6E2K-g41awFmA&forcekml=1"
           options={{ preserveViewport: true }}
         />
-      </MapView>
+      </MapView> */}
     </View>
   );
 }

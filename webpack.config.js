@@ -18,8 +18,12 @@ module.exports = async function (env, argv) {
       },
     };
   }
+  // console.log(JSON.stringify(env, null, 2));
+  // console.log(process.cwd());
 
   config.resolve.alias = { ...config.resolve.alias,
+    // TODO: Findout how to resolve this freaking shitty thing
+    // 'react-native-maps': '~/work/hutka-app-fe/packages/react-native-web-maps/',
     'react-native-maps': 'react-native-web-maps',
   }
   return config;
