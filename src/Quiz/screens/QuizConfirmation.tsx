@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import cn from "react-native-classnames";
-import { Colors, TextStyles } from "../common";
-import { StyledButton } from "../components";
+import { Colors, TextStyles } from "../../common";
+import { StyledButton } from "../../components";
 
-export const QuizConfirmation = (props: any) => {
+export default function QuizConfirmation(props: any) {
   const { onPress, text, backgroundStyle, textStyle, navigation } = props;
   const containerStyles = cn(styles, "container");
   const textStyles = cn(styles, text, textStyle);
@@ -21,7 +21,7 @@ export const QuizConfirmation = (props: any) => {
     <View style={containerStyles}>
       <Image
         style={{ height: 208, width: 208 }}
-        source={require("../../assets/images/App Icon.png")}
+        source={require("../../../assets/images/App Icon.png")}
       />
 
       <Text style={TextStyles.Large}>Привет!</Text>
@@ -39,7 +39,7 @@ export const QuizConfirmation = (props: any) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = {
   container: {
@@ -50,14 +50,6 @@ const styles = {
     flexDirection: "column",
     backgroundColor: Colors.background,
   },
-  yellow: {
-    backgroundColor: Colors.primary,
-    borderRadius: 8,
-    borderStyle: "solid",
-    borderColor: Colors.border,
-    borderWidth: 1,
-  },
-  transparent: {},
   buttonContainer: {
     flexDirection: "column",
     justifyContent: "space-around",

@@ -2,7 +2,7 @@ import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
-import Colors from "../../constants/Colors";
+import Colors from "../common/Colors";
 
 export default function EditScreenInfo({ path }: { path: string }) {
   return (
@@ -48,7 +48,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
+    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet",
   );
 }
 

@@ -12,7 +12,7 @@ const button = () => {
     <TouchableOpacity style={styles.button}>
       <Text>
         <FontAwesome5 name="bicycle" />
-        <Text>Велосипед</Text>
+        <Text> Велосипед</Text>
       </Text>
     </TouchableOpacity>
   );
@@ -28,11 +28,7 @@ export default (props: ImageCardProps) => {
 
   return (
     <View style={CommonCardStyles.container}>
-      <IconHead
-        iconType="FontAwesome5"
-        name="car-side"
-        color={Colors.accent}
-      ></IconHead>
+      <IconHead iconType="FontAwesome5" name="car-side" color={Colors.accent} />
 
       <Text style={styles.textStyles}>Как планируешь передвигаться?</Text>
       <View style={styles.buttonsContainer}>
@@ -50,21 +46,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
+    flex: 0,
     margin: 5,
     minWidth: "23%",
     maxHeight: 40,
     borderRadius: 8,
     textAlign: "left",
-    padding: 5,
+    padding: 10,
     borderColor: Colors.greyLight,
     borderWidth: 0.5,
     flexDirection: "row",
     alignItems: "center",
+    textAlignVertical: "center",
+    justifyContent: "center",
   },
   textContainer: {
     flex: 1,
     maxHeight: "30%",
-    alignItems: "center",
+    alignContent: "center",
     justifyContent: "center",
     backgroundColor: Colors.secondaryButton,
   },

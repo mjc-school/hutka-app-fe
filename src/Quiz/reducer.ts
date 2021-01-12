@@ -1,11 +1,13 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { QuizActions } from ".";
+import QuizActions from "./actions";
 
 const initial = {
-  config: undefined,
+  config: {},
 };
 
-export const QuizReducer = createReducer(initial, (builder) => {
+// console.log(JSON.stringify(QuizActions, null, 2));
+
+export default createReducer(initial, (builder) => {
   builder.addCase(QuizActions.loadConfig.type, (state, action) => {
     state.config = action;
   });

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import cn from "react-native-classnames";
 
 import { StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
-import { Colors, TextStyles } from "../common";
+import { Colors, TextStyles } from "../../common";
 
 const ProgressDash = ({ passed }: { passed: boolean }) => (
   <View

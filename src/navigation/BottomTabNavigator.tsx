@@ -1,13 +1,14 @@
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import Icons, { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 
-import Colors from "../constants/Colors";
+import Colors from "../common/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import TabOneScreen from "../src/screens/TabOneScreen";
-import TabTwoScreen from "../src/screens/TabTwoScreen";
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
+import TabOneScreen from "../screens/TabOneScreen";
+import TabTwoScreen from "../screens/TabTwoScreen";
+
+import { BottomTabParamList, TabTwoParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -16,36 +17,21 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Main"
-      tabBarOptions={{ activeTintColor: Colors.accent }}
-      screenOptions={{
-        headerShown: false,
-      }}
+      initialRouteName="TabOne"
+      tabBarOptions={{ activeTintColor: Colors.iconGrey}}
     >
       <BottomTab.Screen
-        name="Main"
+        name="TabOne"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerShown: false,
+          tabBarIcon: () => <Icons.AntDesign name="home" size={30} />,
         }}
       />
       <BottomTab.Screen
-        name="Routes"
+        name="TabTwo"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="routes" color={color} />,
-          headerShown: false,
-        }}
-      />
-      <BottomTab.Screen
-        name="Map"
-        component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="map-marker-outline" color={color} />
-          ),
-          headerShown: false,
+          tabBarIcon: () => <Icons.AntDesign name="home" size={30} />,
         }}
       />
     </BottomTab.Navigator>
@@ -55,21 +41,19 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
-  return (
-    <MaterialCommunityIcons size={30} style={{ marginBottom: -3 }} {...props} />
-  );
+  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const TabOneStack = createStackNavigator<any>();
 
 function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        component={TabTwoScreen}
+        component={TabOneScreen}
         options={{ headerTitle: "Tab One Title" }}
       />
     </TabOneStack.Navigator>
@@ -83,7 +67,7 @@ function TabTwoNavigator() {
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name="TabTwoScreen"
-        component={TabOneScreen}
+        component={TabTwoScreen}
         options={{ headerTitle: "Tab Two Title" }}
       />
     </TabTwoStack.Navigator>

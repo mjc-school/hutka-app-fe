@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Platform, StyleSheet, View, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { RouteCard, StyledButton } from "../components";
-import { Colors, TextStyles } from "../common";
+import { RouteCard, StyledButton } from "../../components";
+import { Colors, TextStyles } from "../../common";
 
 export default function QuizResult() {
   return (

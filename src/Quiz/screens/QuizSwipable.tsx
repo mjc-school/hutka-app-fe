@@ -7,11 +7,11 @@ import {
   IconCard,
   InputCard,
   StyledButton,
-} from "../components";
-import { Colors } from "../common";
-import { ProgressBar } from "./ProgressBar";
+} from "../../components";
+import { Colors } from "../../common";
+import { ProgressBar } from "../components/ProgressBar";
 
-export const QuizSwipable = () => {
+export default function QuizSwipable() {
   const [swipedAllCards, setSwipedAllCards] = useState(false);
   const [cardIndex, setCardIndex] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState("");
@@ -30,7 +30,7 @@ export const QuizSwipable = () => {
     parameter: "nature",
     result: undefined,
   };
-  const cards = ["ImageCard", "InputCard", "IconCard"];
+  const cards = ["IconCard", "ImageCard", "InputCard"];
 
   const renderCard = (card) => {
     if (card === "InputCard") {
@@ -101,7 +101,7 @@ export const QuizSwipable = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

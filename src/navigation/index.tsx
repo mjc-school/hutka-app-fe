@@ -10,8 +10,8 @@ import { ColorSchemeName } from "react-native";
 import NotFoundScreen from "../src/screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
-import Dashboard from "./Dashboard";
-import QuizNavigator from "./QuizNavigator";
+import Dashboard from "../Dashboard/navigator";
+import QuizNavigator from "../Quiz/navigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 
 // If you are not familiar with React Navigation, we recommend going through the
