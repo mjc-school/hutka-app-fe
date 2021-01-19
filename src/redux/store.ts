@@ -1,11 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import ReduxThunk from "redux-thunk";
+import { configureStore } from '@reduxjs/toolkit';
+import ReduxThunk from 'redux-thunk';
 
-import { QuizReducer } from "../Quiz";
+import { QuizReducer } from '../Quiz';
 
 export const Store = configureStore({
-  reducer: {
-    quiz: QuizReducer,
-  },
-  middleware: [ReduxThunk],
+    reducer: {
+        quiz: QuizReducer
+    },
+    middleware: [ReduxThunk]
 });

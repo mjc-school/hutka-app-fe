@@ -1,32 +1,32 @@
-import { createAction, PayloadAction } from "@reduxjs/toolkit";
-import { Action } from "redux";
+import { createAction, PayloadAction } from '@reduxjs/toolkit';
+import { Action } from 'redux';
 
-export * from "@reduxjs/toolkit";
+export * from '@reduxjs/toolkit';
 
 type PayloadActionMeta = {
-  dispatchedTime: number;
-  stack?: string;
+    dispatchedTime: number;
+    stack?: string;
 };
 
 export type AppAction<A = Action, P = any> = A &
-  (
-    | PayloadAction<P, string, PayloadActionMeta, boolean>
-    | PayloadAction<P, string, PayloadActionMeta>
-  );
+    (
+        | PayloadAction<P, string, PayloadActionMeta, boolean>
+        | PayloadAction<P, string, PayloadActionMeta>
+    );
 
 export interface AppActionContextArgs<
-  T = any,
-  P = any,
-  ExternalActionData = {},
-  Args extends any[] = any[]
+    T = any,
+    P = any,
+    ExternalActionData = {},
+    Args extends any[] = any[]
 > {
-  (...args: Args): AppAction<Action<T>, P> & ExternalActionData;
-  type: T;
+    (...args: Args): AppAction<Action<T>, P> & ExternalActionData;
+    type: T;
 }
 
 export interface AppActionContext<T = any, P = any, ExternalActionData = {}> {
-  (payload: P): AppAction<Action<T>, P> & ExternalActionData;
-  type: T;
+    (payload: P): AppAction<Action<T>, P> & ExternalActionData;
+    type: T;
 }
 
 /**
@@ -46,15 +46,15 @@ export interface AppActionContext<T = any, P = any, ExternalActionData = {}> {
  * @deprecated Use `createAction` instead
  */
 export function makeActionContext<T extends string>(type: T) {
-  return <P = void>() =>
-    createAction(type, (payload: P) => ({
-      payload,
-      meta: {
-        dispatchedTime: Date.now(),
-        // Uncomment if you need additional stack information
-        // stack : new Error().stack,
-      },
-    }));
+    return <P = void>() =>
+        createAction(type, (payload: P) => ({
+            payload,
+            meta: {
+                dispatchedTime: Date.now()
+                // Uncomment if you need additional stack information
+                // stack : new Error().stack,
+            }
+        }));
 }
 
 /**
@@ -63,16 +63,16 @@ export function makeActionContext<T extends string>(type: T) {
  * @param type Action type name
  */
 export function makeErrorActionContext<T extends string>(type: T) {
-  return <P = void>() =>
-    createAction(type, (payload: P) => ({
-      payload,
-      error: true,
-      meta: {
-        dispatchedTime: Date.now(),
-        // Uncomment if you need additional stack information
-        // stack : new Error().stack,
-      },
-    }));
+    return <P = void>() =>
+        createAction(type, (payload: P) => ({
+            payload,
+            error: true,
+            meta: {
+                dispatchedTime: Date.now()
+                // Uncomment if you need additional stack information
+                // stack : new Error().stack,
+            }
+        }));
 }
 
 /**
@@ -80,16 +80,16 @@ export function makeErrorActionContext<T extends string>(type: T) {
  * @param type Action type name
  */
 export function makeSynchronousActionContext<T extends string>(type: T) {
-  return <P = void>() =>
-    createAction(type, (payload: P) => ({
-      payload,
-      meta: {
-        synchronous: true,
-        dispatchedTime: Date.now(),
-        // Uncomment if you need additional stack information
-        // stack : new Error().stack,
-      },
-    }));
+    return <P = void>() =>
+        createAction(type, (payload: P) => ({
+            payload,
+            meta: {
+                synchronous: true,
+                dispatchedTime: Date.now()
+                // Uncomment if you need additional stack information
+                // stack : new Error().stack,
+            }
+        }));
 }
 
 /**
@@ -112,10 +112,10 @@ export function makeSynchronousActionContext<T extends string>(type: T) {
  * }
  */
 export function createActions<
-  T extends { [key: string]: any },
-  K extends keyof T
+    T extends { [key: string]: any },
+    K extends keyof T
 >(actions: T) {
-  return actions as T & {
-    Type: ReturnType<T[K]>;
-  };
+    return actions as T & {
+        Type: ReturnType<T[K]>;
+    };
 }

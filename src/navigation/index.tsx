@@ -1,34 +1,31 @@
 import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
-import { ColorSchemeName } from "react-native";
-
-import NotFoundScreen from "../src/screens/NotFoundScreen";
-import { RootStackParamList } from "../types";
-import BottomTabNavigator from "./BottomTabNavigator";
-import Dashboard from "../Dashboard/navigator";
-import QuizNavigator from "../Quiz/navigator";
-import LinkingConfiguration from "./LinkingConfiguration";
+    NavigationContainer,
+    DefaultTheme,
+    DarkTheme,
+} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as React from 'react';
+import { ColorSchemeName } from 'react-native';
+import { RootStackParamList } from '../types';
+import Dashboard from '../Dashboard/navigator';
+import QuizNavigator from '../Quiz/navigator';
+import LinkingConfiguration from './LinkingConfiguration';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({
-  colorScheme,
+    colorScheme,
 }: {
-  colorScheme: ColorSchemeName;
+    colorScheme: ColorSchemeName;
 }) {
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
-      <RootNavigator />
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer
+            linking={LinkingConfiguration}
+            theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+            <RootNavigator />
+        </NavigationContainer>
+    );
 }
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -36,12 +33,11 @@ export default function Navigation({
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="QuizStack" component={QuizNavigator} />
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
-    </Stack.Navigator>
-  );
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {/* <Stack.Screen name="QuizStack" component={QuizNavigator} /> */}
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+            {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
+        </Stack.Navigator>
+    );
 }

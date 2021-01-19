@@ -12,5 +12,5 @@
     "resolveJsonModule": true,
     "strict": false
   },
-  "include": ["src", "togeojson.d.ts", "navigation", "navigation"]
+  "include": ["./src", "togeojson.d.ts", "navigation", "navigation"]
 }

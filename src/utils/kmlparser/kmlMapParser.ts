@@ -1,7 +1,7 @@
-import { kml } from "@tmcw/togeojson";
+import { kml } from '@tmcw/togeojson';
 
-import DOMParser from "react-native-html-parser";
-import ToGeo from "./togeojson";
+import DOMParser from 'react-native-html-parser';
+import ToGeo from './togeojson';
 
 const html = `<?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -47,7 +47,7 @@ const html = `<?xml version="1.0" encoding="utf-8"?>
   </Document>
 </kml>`;
 const parser = new DOMParser.DOMParser();
-const parsed = parser.parseFromString(html, "text/xml");
+const parsed = parser.parseFromString(html, 'text/xml');
 
 console.log;
 
