@@ -9,7 +9,8 @@
     "test": "jest --watchAll",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "prettier:write": "npx prettier --write **/*.{ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
-    "transformSvg": "npx @svgr/cli --template ./src/configs/svg-template-typescript.js --native -d ./src/svgComponents ./assets/images/svg"
+    "transformSvg": "npx @svgr/cli --template ./src/configs/svg-template-typescript.js --native -d ./src/svgComponents ./assets/images/svg",
+    "build:web": "expo build:web"
   },
   "jest": {
     "preset": "jest-expo"
@@ -74,6 +75,8 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "@types/geojson": "^7946.0.7",
+    "@types/react-native-maps": "^0.24.0",
     "jest-expo": "~39.0.0",
     "prettier": "^2.2.1",
     "tslint": "^6.1.3",

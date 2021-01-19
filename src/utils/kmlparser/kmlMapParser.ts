@@ -47,11 +47,26 @@ const html = `<?xml version="1.0" encoding="utf-8"?>
   </Document>
 </kml>`;
 const parser = new DOMParser.DOMParser();
-const parsed = parser.parseFromString(html, 'text/xml');
 
+<<<<<<< HEAD
 console.log;
+=======
+// html
+const parsed = parser.parseFromString(html, "text/xml");
+>>>>>>> feat/map-component
 
-// export let kmlMarkup =  ToGeo.kml(parsed);
+
+console.log("kml-map-parser");
+
+let kmlMarkupParsed =  ToGeo.kml(parsed);
+console.log(kmlMarkupParsed);
+
+
+export function kmlTextToGeoJson(xml: string) {
+  const parsed = parser.parseFromString(xml, "text/xml");
+  return kml(parsed);
+}
+
 // console.log(JSON.stringify(kmlMarkup, null, 2))
 
 // import {Loader, LoaderOptions} from 'google-maps';
@@ -62,6 +77,8 @@ console.log;
 
 // const google = await loader.load();
 // const map = new google.maps.Map(document.getElementById('map'), {
-//     center: {lat: -34.397, lng: 150.644},
-//     zoom: 8,
-// });
+  //     center: {lat: -34.397, lng: 150.644},
+  //     zoom: 8,
+  // });
+  
+export default kmlMarkupParsed;

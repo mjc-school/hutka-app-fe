@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native';
 import MapView, { Geojson, Marker } from 'react-native-maps';
+import React from 'react'
+import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native'
+import MapView, { Marker} from 'react-native-maps';
 import { Belarus } from '../../utils';
+import Geojson, { makeOverlays } from './GeoJson'
 // import { kmlMarkup } from '../../utils/kmlparser/kmlMapParser';
 
 export default function MyMap() {
@@ -23,23 +27,13 @@ export default function MyMap() {
         <View>
             <Text>{`${Platform.OS} ver.${Platform.Version} `}</Text>
 
-            <MapView
-                style={styles.mapStyle}
-                defaultZoom={6}
-                region={{
-                    latitude: 53.893,
-                    longitude: 27.567,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1
-                }}
-                initialRegion={{
-                    latitude: 53.893,
-                    longitude: 27.567,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1
-                }}
-            >
-                {/* <Marker
+
+  return (
+    <View>
+      <Text>{Platform.OS + " ver."+ Platform.Version + " "}</Text>
+
+      <MapView style={styles.mapStyle}  region={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1  }} initialRegion={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1 }} >
+      {/* <Marker
     title="BAM"
     description="Shape the future of mobile with us"
                   coordinate={{latitude: 53.894,
@@ -52,11 +46,11 @@ export default function MyMap() {
       strokeColor="yellow"
       fillColor="black"
       strokeWidth={2}
-    />
+    /> */}
 
 
-     <Geojson 
-      geojson={JSON.parse(Belarus)} 
+     {/* <Geojson 
+      geojson={Belarus} 
       strokeColor="red"
       fillColor="green"
       strokeWidth={2}
