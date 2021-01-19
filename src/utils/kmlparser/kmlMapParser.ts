@@ -48,24 +48,18 @@ const html = `<?xml version="1.0" encoding="utf-8"?>
 </kml>`;
 const parser = new DOMParser.DOMParser();
 
-<<<<<<< HEAD
-console.log;
-=======
 // html
-const parsed = parser.parseFromString(html, "text/xml");
->>>>>>> feat/map-component
+// const parsed = parser.parseFromString(html, 'text/xml');
 
+// console.log('kml-map-parser');
 
-console.log("kml-map-parser");
+// const kmlMarkupParsed = ToGeo.kml(parsed);
+// console.log(kmlMarkupParsed);
 
-let kmlMarkupParsed =  ToGeo.kml(parsed);
-console.log(kmlMarkupParsed);
-
-
-export function kmlTextToGeoJson(xml: string) {
-  const parsed = parser.parseFromString(xml, "text/xml");
-  return kml(parsed);
-}
+// export function kmlTextToGeoJson(xml: string) {
+//     const parsed = parser.parseFromString(xml, 'text/xml');
+//     return kml(parsed);
+// }
 
 // console.log(JSON.stringify(kmlMarkup, null, 2))
 
@@ -77,8 +71,8 @@ export function kmlTextToGeoJson(xml: string) {
 
 // const google = await loader.load();
 // const map = new google.maps.Map(document.getElementById('map'), {
-  //     center: {lat: -34.397, lng: 150.644},
-  //     zoom: 8,
-  // });
-  
-export default kmlMarkupParsed;
+//     center: {lat: -34.397, lng: 150.644},
+//     zoom: 8,
+// });
+
+// export default kmlMarkupParsed;

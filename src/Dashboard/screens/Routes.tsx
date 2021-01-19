@@ -12,7 +12,7 @@ import MapView, { Geojson } from 'react-native-maps';
 import { Colors } from '../../common';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
-import MyMap from '../../components/Map/map.component';
+import { MyMap } from '../../components/Map';
 // import { KmlLayer, Marker } from "react-google-maps";
 
 export default function Routes() {

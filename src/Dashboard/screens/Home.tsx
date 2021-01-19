@@ -13,13 +13,18 @@ import { SearchBar } from 'react-native-elements';
 import { Colors, TextStyles } from '../../common';
 import { CardButton, RouteCard, RouteImage } from '../../components';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import MyMap from '../../components/Map/map.component';
+import { routeNames } from '../../utils/kmlparser';
 // import { KmlLayer, Marker } from "react-google-maps";
 
 export default function Home(props: any) {
-    const { navigation } = props;
 
+    const { navigation, chooseRoute,routeNames, routes } = props;
+
+    console.log(routes);
+    const onCardPress = ()=> {
+        // navigation.
+    };
+    
     const press = () => console.log('route');
 
     return (

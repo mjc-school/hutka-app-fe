@@ -25,7 +25,7 @@ export default function BottomTabNavigator() {
         >
             <BottomTab.Screen
                 name="Main"
-                component={Home}
+                component={MainNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="home" color={color} />
@@ -73,11 +73,16 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+function MainNavigator() {
     return (
         <TabOneStack.Navigator>
             <TabOneStack.Screen
-                name="TabOneScreen"
+                name="Home"
+                component={Home}
+                options={{ headerTitle: 'Tab One Title' }}
+            />
+            <TabOneStack.Screen
+                name="Map"
                 component={Home}
                 options={{ headerTitle: 'Tab One Title' }}
             />

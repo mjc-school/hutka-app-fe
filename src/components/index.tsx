@@ -7,3 +7,5 @@ export { default as InputCard } from './Cards/InputCard';
 export { default as RouteCard } from './RouteCard';
 export { RouteImage } from './RouteImage';
 export * from './CardButton';
+
+export { MyMap } from './Map';
