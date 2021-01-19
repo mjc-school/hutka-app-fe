@@ -3,9 +3,6 @@ import MapView from "react-native-maps";
 import CustomMarker from "./CustomMarker";
 import MapViewMarker from "./Marker";
 
-
-import markerSvg from "./marker.svg";
-
 export const makeOverlays = (features: GeoJSON.Feature<GeoJSON.Geometry>[]) => {
   const points = features
     .filter(
@@ -142,7 +139,7 @@ const Geojson = (props: any) => {
               pinColor="green"
               // {...overlay.feature.properties}
             >
-              <CustomMarker />
+              <CustomMarker index={index + 1} status={index % 3} />
             </MapViewMarker>
           );
         }

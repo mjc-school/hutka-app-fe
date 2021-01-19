@@ -7,7 +7,6 @@ import { View, Text } from 'react-native';
 class MapViewMarker extends Component {
   render() {
     const { description, title, coordinate, children, ...rest } = this.props;
-    console.log("OYYYYYY");
     if (true) {
       const { onPress, ...overlayRest } = rest;
 
@@ -18,7 +17,6 @@ class MapViewMarker extends Component {
       ) : (
         children
       );
-      console.log(wrappedChildren);
       return (
         <OverlayView
           {...overlayRest}

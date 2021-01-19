@@ -13,6 +13,7 @@ import MapView, { Geojson } from "react-native-maps";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import MyMap from "../components/Map/map.component";
+import { fourCities } from "../utils/kmlparser/fourCities";
 // import { KmlLayer, Marker } from "react-google-maps";
 
 interface IRoute {
@@ -23,12 +24,20 @@ interface IRoute {
   description: string;
 }
 
+const mockRoute: IRoute = {
+  id: 'mock-id',
+  kml: JSON.parse(fourCities),
+  tags: [],
+  name: 'Four Cities',
+  description: 'Minsk -> Gomel -> Pinsk -> Baranovichi',
+};
+
 export const MapContext = React.createContext<IRoute | null>(null);
 
 export default function TabOneScreen() {
   const [searchTag, setSearchTag] = React.useState("");
   const [routes, setRoutes] = React.useState<IRoute[]>([]);
-  const [selectedRoute, setSelectedRoute] = React.useState<IRoute | null>(null);
+  const [selectedRoute, setSelectedRoute] = React.useState<IRoute | null>(mockRoute);
 
   const onRoutesSearch = React.useCallback(() => {
     const body = {
