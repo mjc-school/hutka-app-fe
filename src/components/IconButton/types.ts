@@ -1,9 +1,10 @@
-import { StyleProp, TextStyle } from "react-native";
-import Icons from "@expo/vector-icons";
+import { StyleProp, TextStyle } from 'react-native';
+import Icons from '@expo/vector-icons';
 
 export type ButtonProps = {
-  name: string;
-  color: string;
-  onPress?: (event) => void;
-  iconType: string;
+    name: string;
+    color: string;
+    onPress?: (event) => void;
+    iconType: string;
+    type?: 'big' | 'small';
 };

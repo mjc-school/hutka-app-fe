@@ -1,40 +1,40 @@
-import * as Linking from "expo-linking";
+import * as Linking from 'expo-linking';
 
 export default {
-  prefixes: [Linking.makeUrl("/")],
-  config: {
-    screens: {
-      QuizStack: {
+    prefixes: [Linking.makeUrl('/')],
+    config: {
         screens: {
-          QuizConfirmation: "confirmation",
-          Quiz: "quiz",
-        },
-      },
-      Dashboard: {
-        screens: {
-          Dashboard: {
-            screens: {
-              Main: "main",
-              Map: "map",
+            QuizStack: {
+                screens: {
+                    QuizConfirmation: 'confirmation',
+                    Quiz: 'quiz',
+                },
             },
-          },
-        },
-      },
-      Root: {
-        screens: {
-          TabOne: {
-            screens: {
-              TabOneScreen: "one",
+            Dashboard: {
+                screens: {
+                    Dashboard: {
+                        screens: {
+                            Main: 'main',
+                            Map: 'map',
+                        },
+                    },
+                },
             },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: "two",
+            Root: {
+                screens: {
+                    TabOne: {
+                        screens: {
+                            TabOneScreen: 'one',
+                        },
+                    },
+                    TabTwo: {
+                        screens: {
+                            TabTwoScreen: 'two',
+                        },
+                    },
+                },
             },
-          },
+            NotFound: '*',
         },
-      },
-      NotFound: "*",
     },
-  },
 };

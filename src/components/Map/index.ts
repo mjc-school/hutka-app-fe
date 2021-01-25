@@ -1,1 +1,1 @@
-export { default as MyMap } from "./map.component";
+export { default as MyMap } from './map.component.web';

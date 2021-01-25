@@ -1,89 +1,91 @@
-import React from "react";
-import { View, Text, StyleSheet, Dimensions, Platform } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import { KmlLayer } from "react-google-maps";
-import { Belarus, BelarusShort } from "../../utils";
-import Geojson, { makeOverlays } from "./GeoJson";
+import React from 'react';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
+import MapView from 'react-native-maps';
+// import { KmlLayer } from "react-google-maps";
 
-// в оригинале мы юзаем react-google-maps которые обернуты библиотекой  react-native-web-maps
-// В нейтиве юзается react-native-maps
-export default function MyMap() {
-  const myPlace = {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        properties: {},
-        geometry: {
-          type: "Point",
-          coordinates: [27.568, 53.894],
-          color: "ff3644db",
-        },
+import Geojson, { makeOverlays } from './GeoJson';
+
+import CustomMarker from './CustomMarker';
+
+const point = JSON.parse(`{
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        27.5589762,
+        53.9005987,
+        0
+      ]
+    },
+    "properties": {
+      "name": "Minsk, Belarus",
+      "styleUrl": "#icon-1899-DB4436-nodesc",
+      "styleHash": "-2c17104e",
+      "styleMapHash": {
+        "normal": "#icon-1899-DB4436-nodesc-normal",
+        "highlight": "#icon-1899-DB4436-nodesc-highlight"
       },
-    ],
-  };
-  return (
-    <View style={styles.container}>
-      <MapView
-        style={styles.mapStyle}
-        defaultZoom={6}
-        region={{
-          latitude: 53.893,
-          longitude: 27.567,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-        initialRegion={{
-          latitude: 53.893,
-          longitude: 27.567,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-      >
-        {/* <MapView.Marker
-    title="BAM"
-    description="Shape the future of mobile with us"
-                  coordinate={{latitude: 53.894,
-                    longitude: 27.568}}
-                  
-                /> */}
+      "icon-opacity": 1,
+      "icon-color": "#db4436",
+      "icon-scale": 1,
+      "icon-offset": [
+        32,
+        64
+      ],
+      "icon": "https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png",
+      "label-scale": 0
+    }
+  }`);
 
-        <Geojson
-          geojson={BelarusShort}
-          strokeColor="yellow"
-          fillColor="black"
-          strokeWidth={2}
-        />
-      </MapView>
-      {/* <MapView style={styles.mapStyle} defaultZoom={6} region={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1  }} initialRegion={{ latitude: 53.893, longitude: 27.567, latitudeDelta: 0.1, longitudeDelta: 0.1 }} >
-
-        <KmlLayer
-      url="https://www.google.com/maps/d/kml?mid=1EZOTjkxsR29lvHC7IPz6E2K-g41awFmA&forcekml=1"
-      options={{ preserveViewport: true }}
-    />
-    </MapView> */}
-    </View>
-  );
+export default function MyMap(props) {
+    const { data } = props;
+    const geojsonLike = { features: data };
+    return (
+        <MapView
+            style={styles.mapStyle}
+            defaultZoom={6}
+            region={{
+                latitude: 53.893,
+                longitude: 27.567,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+            }}
+            initialRegion={{
+                latitude: 53.893,
+                longitude: 27.567,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+            }}
+        >
+            <Geojson
+                geojson={geojsonLike}
+                strokeColor="yellow"
+                fillColor="black"
+                strokeWidth={2}
+            />
+        </MapView>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    height: 200,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  mapStyle: {
-    width: Dimensions.get("window").width / 2,
-    height: Dimensions.get("window").height - 300,
-  },
+    container: {
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        height: 200,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    separator: {
+        marginVertical: 30,
+        height: 1,
+        width: '80%',
+    },
+    mapStyle: {
+        width: '100%',
+        height: '100%',
+    },
 });

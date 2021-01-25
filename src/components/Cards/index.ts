@@ -1,1 +1,1 @@
-export { CommonCardStyles } from "./CommonCardStyles";
+export { CommonCardStyles } from './CommonCardStyles';

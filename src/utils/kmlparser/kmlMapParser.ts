@@ -1,7 +1,7 @@
-import { kml } from "@tmcw/togeojson";
+import { kml } from '@tmcw/togeojson';
 
-import DOMParser from "react-native-html-parser";
-import ToGeo from "./togeojson";
+import DOMParser from 'react-native-html-parser';
+import ToGeo from './togeojson';
 
 const html = `<?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -47,11 +47,20 @@ const html = `<?xml version="1.0" encoding="utf-8"?>
   </Document>
 </kml>`;
 const parser = new DOMParser.DOMParser();
-const parsed = parser.parseFromString(html, "text/xml");
 
-console.log;
+// html
+// const parsed = parser.parseFromString(html, 'text/xml');
 
-// export let kmlMarkup =  ToGeo.kml(parsed);
+// console.log('kml-map-parser');
+
+// const kmlMarkupParsed = ToGeo.kml(parsed);
+// console.log(kmlMarkupParsed);
+
+// export function kmlTextToGeoJson(xml: string) {
+//     const parsed = parser.parseFromString(xml, 'text/xml');
+//     return kml(parsed);
+// }
+
 // console.log(JSON.stringify(kmlMarkup, null, 2))
 
 // import {Loader, LoaderOptions} from 'google-maps';
@@ -65,3 +74,5 @@ console.log;
 //     center: {lat: -34.397, lng: 150.644},
 //     zoom: 8,
 // });
+
+// export default kmlMarkupParsed;
