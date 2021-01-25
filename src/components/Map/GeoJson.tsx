@@ -80,8 +80,10 @@ const makeOverlay = (
         if (Array.isArray(coordinates) && coordinates.length > 1) {
             overlay.holes = coordinates.slice(1);
         }
-        return overlay;
+    } else {
+        overlay.coordinates = coordinates;
     }
+    return overlay;
 };
 
 interface GeoPosition {
@@ -120,7 +122,7 @@ const makeCoordinates = (feature: GeoJSON.Feature<GeoJSON.Geometry>) => {
 };
 
 const Geojson = (props: any) => {
-    const overlays = makeOverlays(props.geojson.features);
+    const overlays = makeOverlays(Array.from(props.geojson.features));
 
     const onMarkerPress = React.useCallback((overlay: Overlay) => {
         console.log(overlay.feature.properties?.name);

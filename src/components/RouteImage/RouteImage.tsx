@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
     textStyles: {
         ...TextStyles.H6,
         zIndex: 1000,
-        color: Colors.white,
+        color: Colors.accent,
         // zIndex: 1000,
-        bottom: '30%',
+        bottom: '50%',
         position: 'relative',
     },
     buttonContainer: {

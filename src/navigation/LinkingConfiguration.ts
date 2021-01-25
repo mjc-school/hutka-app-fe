@@ -7,34 +7,34 @@ export default {
             QuizStack: {
                 screens: {
                     QuizConfirmation: 'confirmation',
-                    Quiz: 'quiz'
-                }
+                    Quiz: 'quiz',
+                },
             },
             Dashboard: {
                 screens: {
                     Dashboard: {
                         screens: {
                             Main: 'main',
-                            Map: 'map'
-                        }
-                    }
-                }
+                            Map: 'map',
+                        },
+                    },
+                },
             },
             Root: {
                 screens: {
                     TabOne: {
                         screens: {
-                            TabOneScreen: 'one'
-                        }
+                            TabOneScreen: 'one',
+                        },
                     },
                     TabTwo: {
                         screens: {
-                            TabTwoScreen: 'two'
-                        }
-                    }
-                }
+                            TabTwoScreen: 'two',
+                        },
+                    },
+                },
             },
-            NotFound: '*'
-        }
-    }
+            NotFound: '*',
+        },
+    },
 };

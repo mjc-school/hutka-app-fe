@@ -8,7 +8,7 @@ import {
     Dimensions,
     FlatList,
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+// import { SearchBar } from 'react-native-elements';
 
 import { Colors, TextStyles } from '../../common';
 import { CardButton, RouteCard, RouteImage } from '../../components';
@@ -18,11 +18,12 @@ import { routeNames } from '../../utils/kmlparser';
 
 export default function Home(props: any) {
 
-    const { navigation, chooseRoute,routeNames, routes } = props;
-
+    const { navigation, chooseRoute,routeNames, routes, routeImages } = props;
+    const cardData = [...routeNames].map((item,index) => ({caption: item, imageUri: routeImages[index]}))
     console.log(routes);
-    const onCardPress = ()=> {
-        // navigation.
+    const navigateToMap = ()=> {
+
+        navigation.navigate('Map');
     };
     
     const press = () => console.log('route');
@@ -44,7 +45,7 @@ export default function Home(props: any) {
                     Из минска
                 </Text>
             </View>
-            <SearchBar
+            {/* <SearchBar
                 placeholder="Type Here..."
                 lightTheme
                 containerStyle={{
@@ -53,80 +54,51 @@ export default function Home(props: any) {
                 }}
                 // onChangeText={this.updateSearch}
                 // value={search}
-            />
+            /> */}
+            <View style={styles.contentContainer}>
             <ScrollView
                 horizontal
                 style={styles.horizontalContainer}
                 contentContainerStyle={styles.horizontalPadding}
             >
-                <View style={styles.horizontalPadding}>
+
+                <View  style={styles.horizontalPadding}>
                     <CardButton
                         backgroundColor={Colors.accent}
                         type={'Orange'}
                         text="Пройти опрос"
                     />
                 </View>
-                <View style={styles.horizontalPadding}>
+                {cardData.map((item, index) =>{
+                        const onPress = ()=> {
+                            chooseRoute(index);
+                            navigateToMap();
+                        };
+                    return (
+                    <View key={index} style={styles.horizontalPadding}>
                     <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
+                    key={index}
+                        {...item}
+                        onPress={onPress}
                     />
-                </View>
-                <View style={styles.horizontalPadding}>
-                    <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
-                    />
-                </View>
-                <View style={styles.horizontalPadding}>
-                    <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
-                    />
-                </View>
-                <View style={styles.horizontalPadding}>
-                    <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
-                    />
-                </View>
-                <View style={styles.horizontalPadding}>
-                    <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
-                    />
-                </View>
-                <View style={styles.horizontalPadding}>
-                    <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
-                    />
-                </View>
-                <View style={styles.horizontalPadding}>
-                    <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
-                    />
-                </View>
-                <View style={styles.horizontalPadding}>
-                    <RouteImage
-                        caption="Браславские озера и Витебская область"
-                        imageUri="https://www.belarus.by/dadvimages/001322_568005.jpg"
-                        onPress={press}
-                    />
-                </View>
+                    </View>
+                    )
+                    })}
+                
+                
+                
             </ScrollView>
-            <RouteCard />
-            <RouteCard />
-            <RouteCard />
-            <RouteCard />
+            </View>
+            {cardData.map((item, index) =>{
+                const onPress = ()=> {                    chooseRoute(index);
+                    navigateToMap()
+                };
+                return (
+                <View key={index} onPress={onPress} style={[styles.contentContainer, {paddingHorizontal: 16}]}>
+                    <RouteCard key={index} {...item} onPress={onPress}/>
+                </View>
+                )}
+            )}
         </ScrollView>
     );
 }
@@ -141,7 +113,9 @@ const styles = StyleSheet.create({
     horizontalContainer: {
         maxHeight: 160,
     },
-    contentContainer: {},
+    contentContainer: {
+        marginVertical: 20,
+    },
     horizontalPadding: {
         marginRight: 20,
     },

@@ -18,30 +18,25 @@ const IconWithCaption = ({ iconName, caption }) => (
 );
 
 export default function RouteCard(props: any): any {
-    let { imageUri, caption } = props;
-    caption = '';
+    const { imageUri, caption, onPress } = props;
     const users = 281;
     const time = '1 день';
     const distance = '600 км';
+
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <View style={styles.imageContainer}>
                 <Image
                     resizeMode="cover"
                     style={styles.imageStyles}
                     source={{
-                        uri:
-                            'https://lh3.googleusercontent.com/proxy/pHrh8pkd1TIuvjR4SmJrFJW3qmX-TjBKiTGFFTDpjI_nupe1pRjumUycRNzYLFzn5AwY16MrZ54l6g276VC2m6T2twxLZVklbVa2NdmUWf9yOYKyFkfuJNhtentiNwiXJrVfalyh86pL3-mLg9Ixv_5DmCgr3H6-c1I',
+                        uri: imageUri,
                     }}
                 />
             </View>
             <View style={styles.sideContainer}>
-                <Text style={styles.headText}>
-                    Ишколдь, Мир и озеро Свитязь
-                </Text>
-                <Text style={styles.textStyles}>
-                    Ишколдь – Полонечка – Вольно – Заосье – озеро Свитязь – Мир
-                </Text>
+                <Text style={styles.headText}>{caption.split('-')[5]}</Text>
+                <Text style={styles.textStyles}>{caption}</Text>
                 <View style={styles.bottomContainerStyles}>
                     <IconWithCaption iconName="account" caption={users} />
                     <IconWithCaption iconName="clock-outline" caption={time} />
@@ -58,7 +53,7 @@ export default function RouteCard(props: any): any {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '90%', //TODO must be 90%
+        width: '100%', //TODO must be 90%
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderRadius: 8,

@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -42,11 +42,9 @@
     "react-native-classnames": "^0.1.1",
     "react-native-deck-swiper": "^2.0.5",
     "react-native-dom-parser": "^1.5.3",
-    "react-native-elements": "^3.1.0",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-html-parser": "^0.1.0",
     "react-native-maps": "0.27.1",
-    "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12",

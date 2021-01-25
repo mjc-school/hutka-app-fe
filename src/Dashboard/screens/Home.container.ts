@@ -8,6 +8,7 @@ import DashboardActions from '../actions';
 const mapStateToProps = (state) => ({
     routeNames: state.dashboard.routeNames,
     routes: state.dashboard.routes,
+    routeImages: state.dashboard.routeImages,
 })
 
 const mapDispatchToProps = (dispatch) => ({

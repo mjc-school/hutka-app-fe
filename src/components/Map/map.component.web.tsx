@@ -7,9 +7,38 @@ import Geojson, { makeOverlays } from './GeoJson';
 
 import CustomMarker from './CustomMarker';
 
+const point = JSON.parse(`{
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        27.5589762,
+        53.9005987,
+        0
+      ]
+    },
+    "properties": {
+      "name": "Minsk, Belarus",
+      "styleUrl": "#icon-1899-DB4436-nodesc",
+      "styleHash": "-2c17104e",
+      "styleMapHash": {
+        "normal": "#icon-1899-DB4436-nodesc-normal",
+        "highlight": "#icon-1899-DB4436-nodesc-highlight"
+      },
+      "icon-opacity": 1,
+      "icon-color": "#db4436",
+      "icon-scale": 1,
+      "icon-offset": [
+        32,
+        64
+      ],
+      "icon": "https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png",
+      "label-scale": 0
+    }
+  }`);
+
 export default function MyMap(props) {
     const { data } = props;
-    console.log(data);
     const geojsonLike = { features: data };
     return (
         <MapView
@@ -56,7 +85,7 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     mapStyle: {
-        width: Dimensions.get('window').width / 2,
-        height: Dimensions.get('window').height - 300,
+        width: '100%',
+        height: '100%',
     },
 });

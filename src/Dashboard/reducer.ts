@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 // import {DashboardActions} from './';
-import { routeNames, routes } from '../utils/kmlparser';
+import { routeNames, routes, routeImages } from '../utils/kmlparser';
 import { createActions, createAction } from '../redux/index';
 
 function getRandomInt(max) {
@@ -13,6 +13,7 @@ function getRandomInt(max) {
 const initial = {
     routeNames,
     routes,
+    routeImages,
     choosed: routes[index],
     choosedName: routeNames[index]
 };
