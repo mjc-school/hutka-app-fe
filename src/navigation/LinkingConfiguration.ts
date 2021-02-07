@@ -16,6 +16,8 @@ export default {
                         screens: {
                             Main: 'main',
                             Map: 'map',
+                            Routes: 'Routes',
+                            Place: 'Place',
                         },
                     },
                 },

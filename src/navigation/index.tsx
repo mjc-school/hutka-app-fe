@@ -34,7 +34,10 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            initialRouteName="QuizStack"
+        >
             <Stack.Screen name="QuizStack" component={QuizNavigator} />
             <Stack.Screen name="Dashboard" component={Dashboard} />
             {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}

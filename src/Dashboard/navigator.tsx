@@ -5,7 +5,8 @@ import * as React from 'react';
 
 import Colors from '../common/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { Home, Map, Routes } from './screens';
+import { Home, Map, Routes, PlaceDescription, Route } from './screens';
+import { BackButton } from './components';
 import TabTwoScreen from './screens/Map';
 
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
@@ -17,7 +18,7 @@ export default function BottomTabNavigator() {
 
     return (
         <BottomTab.Navigator
-            initialRouteName="Main"
+            initialRouteName="Place"
             tabBarOptions={{ activeTintColor: Colors.accent }}
             screenOptions={{
                 headerShown: false,
@@ -25,7 +26,7 @@ export default function BottomTabNavigator() {
         >
             <BottomTab.Screen
                 name="Main"
-                component={MainNavigator}
+                component={Home}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="home" color={color} />
@@ -51,6 +52,17 @@ export default function BottomTabNavigator() {
                         <TabBarIcon name="map-marker-outline" color={color} />
                     ),
                     headerShown: false,
+                }}
+            />
+
+            <BottomTab.Screen
+                name="Place"
+                component={PlaceDescription}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <TabBarIcon name="map-marker" color={color} />
+                    ),
+                    headerLeft: BackButton,
                 }}
             />
         </BottomTab.Navigator>
@@ -82,20 +94,30 @@ function MainNavigator() {
         >
             <TabOneStack.Screen name="Home" component={Home} />
             <TabOneStack.Screen name="Map" component={Map} />
+            <TabOneStack.Screen
+                name="Place"
+                component={PlaceDescription}
+                options={{ headerLeft: BackButton }}
+            />
+            <TabOneStack.Screen
+                name="Route"
+                component={Route}
+                options={{ headerLeft: BackButton }}
+            />
         </TabOneStack.Navigator>
     );
 }
 
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
-function TabTwoNavigator() {
-    return (
-        <TabTwoStack.Navigator>
-            <TabTwoStack.Screen
-                name="TabTwoScreen"
-                component={Routes}
-                options={{ headerTitle: 'Tab Two Title' }}
-            />
-        </TabTwoStack.Navigator>
-    );
-}
+// function Place() {
+//     return (
+//         <TabTwoStack.Navigator op>
+//             <TabTwoStack.Screen
+//                 name="TabTwoScreen"
+//                 component={Routes}
+//                 options={{ headerLeft }}
+//             />
+//         </TabTwoStack.Navigator>
+//     );
+// }
