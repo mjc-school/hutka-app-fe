@@ -8,17 +8,79 @@ import {
     Text,
     View,
     Image,
-    TextInput
+    TextInput,
 } from 'react-native';
 import { Colors, TextStyles } from '../../../common';
 import { CommonCardStyles } from '..';
 import { IconHead } from '../IconHead';
 
-const button = () => {
+const styles = StyleSheet.create({
+    buttonsContainer: {
+        flex: 0,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flexBasis: 'auto',
+    },
+    button: {
+        margin: 5,
+        maxHeight: 40,
+        borderRadius: 8,
+        textAlign: 'left',
+        padding: 10,
+        borderColor: Colors.greyLight,
+        borderWidth: 0.5,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    searchControls: {
+        flex: 0,
+        flexBasis: 'auto',
+        flexDirection: 'row',
+        padding: 8,
+        marginBottom: 5,
+        backgroundColor: '#E5E5E5',
+        borderRadius: 8,
+    },
+    searchControl: {
+        padding: 8,
+        fontSize: 16,
+    },
+    mapButton: {
+        padding: 8,
+        paddingRight: 4,
+        borderLeftColor: Colors.greyLight,
+        borderLeftWidth: 0.5,
+    },
+    textContainer: {
+        flex: 1,
+        maxHeight: '30%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.secondaryButton,
+    },
+    textStyles: {
+        ...TextStyles.H1,
+        padding: 30,
+    },
+});
+
+const cities = [
+    'Минск',
+    'Могилев',
+    'Гомель',
+    'Брест',
+    'Гродно',
+    'Витебск',
+    'Молодечно',
+    'Орша',
+    'Барановичи',
+];
+
+const CityButton = ({ city }: { city: string }) => {
     return (
         <TouchableOpacity style={styles.button}>
-            <FontAwesome5 name="bicycle" />
-            <Text>Велосипед</Text>
+            <Text>{city}</Text>
         </TouchableOpacity>
     );
 };
@@ -28,7 +90,7 @@ type InputCard = {
     imageUri: string;
 };
 
-export default (props: InputCard) => {
+export default function InputCard(props: InputCard) {
     const { imageUri, caption } = props;
 
     return (
@@ -38,42 +100,22 @@ export default (props: InputCard) => {
                 name="map-marker"
                 color={Colors.accent}
             />
-            <TextInput style={styles.textStyles}></TextInput>
+            <Text style={styles.textStyles}>Из какого города стартуешь?</Text>
+            <View style={styles.searchControls}>
+                <TextInput
+                    style={styles.searchControl}
+                    placeholderTextColor={Colors.greyLight}
+                    placeholder="Начни вводить место"
+                ></TextInput>
+                <TouchableOpacity style={styles.mapButton}>
+                    <Text style={{ color: Colors.secondary }}>Карта</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.buttonsContainer}>
-                {button()} {button()} {button()}
+                {cities.map((city, i) => (
+                    <CityButton key={i} city={city} />
+                ))}
             </View>
         </View>
     );
-};
-
-const styles = StyleSheet.create({
-    buttonsContainer: {
-        flex: 1,
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    button: {
-        margin: 15,
-        minWidth: '20%',
-        maxHeight: 40,
-        borderRadius: 8,
-        textAlign: 'left',
-        padding: 5,
-        borderColor: Colors.greyLight,
-        borderWidth: 0.5,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    textContainer: {
-        flex: 1,
-        maxHeight: '30%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: Colors.secondaryButton
-    },
-    textStyles: {
-        ...TextStyles.H1,
-        padding: 30
-    }
-});
+}

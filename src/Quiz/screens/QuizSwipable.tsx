@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import Swiper from 'react-native-deck-swiper';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+
 import {
-    IconButton,
+    IconCircleButton,
     ImageCard,
     IconCard,
     InputCard,
@@ -10,6 +12,16 @@ import {
 } from '../../components';
 import { Colors } from '../../common';
 import { ProgressBar } from '../components/ProgressBar';
+
+interface CardSetup {
+    cardComponent: string;
+    buttonsSetup: 'default' | 'icons';
+}
+const cardSetups: readonly CardSetup[] = [
+    { cardComponent: 'IconCard', buttonsSetup: 'default' },
+    { cardComponent: 'ImageCard', buttonsSetup: 'icons' },
+    { cardComponent: 'InputCard', buttonsSetup: 'default' },
+];
 
 export default function QuizSwipable(props) {
     const { navigation } = props;
@@ -31,7 +43,11 @@ export default function QuizSwipable(props) {
         parameter: 'nature',
         result: undefined,
     };
-    const cards = ['IconCard', 'ImageCard', 'InputCard'];
+
+    const cards = React.useMemo(
+        () => cardSetups.map(cs => cs.cardComponent),
+        [],
+    );
 
     const renderCard = card => {
         if (card === 'InputCard') {
@@ -68,9 +84,7 @@ export default function QuizSwipable(props) {
                     ref={swiperRef}
                     cards={cards}
                     renderCard={renderCard}
-                    onSwiped={cardIndex => {
-                        setCardIndex(cardIndex);
-                    }}
+                    onSwiped={idx => setCardIndex(idx + 1)}
                     onSwipedAll={() => {
                         setSwipedAllCards(true);
                     }}
@@ -88,14 +102,37 @@ export default function QuizSwipable(props) {
                 />
             </View>
 
-            <View style={styles.buttonContainer}>
-                <IconButton
-                    color="#e76b6b"
-                    name="heart"
-                    iconType="FontAwesome"
-                />
-                <IconButton color="#000000" name="close" iconType="EvilIcons" />
-            </View>
+            {cardSetups[cardIndex].buttonsSetup === 'icons' ? (
+                <View style={styles.buttonContainer}>
+                    <IconCircleButton
+                        color="#e76b6b"
+                        name="heart"
+                        iconType="FontAwesome"
+                    />
+                    <IconCircleButton
+                        color="#000000"
+                        name="close"
+                        iconType="EvilIcons"
+                    />
+                </View>
+            ) : (
+                <View
+                    style={{
+                        alignSelf: 'center',
+                        top: '80%',
+                        marginTop: 14, // push content below the same way as buttonContainer
+                        marginBottom: 10,
+                    }}
+                >
+                    <StyledButton
+                        buttonStyle="primary"
+                        onPress={onGoToDashboard}
+                    >
+                        {'Далее  '}
+                        <FontAwesome5 name="chevron-right" />
+                    </StyledButton>
+                </View>
+            )}
 
             <View style={{ alignSelf: 'center', top: '80%' }}>
                 <StyledButton
@@ -130,11 +167,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     buttonContainer: {
-        flex: 1,
+        flex: 0,
+        flexBasis: 'auto',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        minWidth: '35%',
-
+        minWidth: 150,
+        marginBottom: 10,
         maxHeight: '10%',
         alignItems: 'center',
         alignSelf: 'center',

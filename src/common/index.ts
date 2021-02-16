@@ -1,2 +1,4 @@
 export { default as Colors } from './Colors';
 export { default as TextStyles } from './TextStyles';
+export * from './types';
+export * from './TextComponents';

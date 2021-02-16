@@ -3,37 +3,17 @@ import Colors from './Colors';
 
 const font = Platform.select({ web: 'Sans Sherif' });
 
-const Large: StyleProp<TextStyle> = {
+export const Large: StyleProp<TextStyle> = {
     // fontFamily: font,
     fontStyle: 'normal',
     fontWeight: '600',
     fontSize: 32,
     lineHeight: 40,
     textAlign: 'center',
-    letterSpacing: '0.37',
+    letterSpacing: 0.37,
+    color: Colors.basic,
 };
-
-const H6: StyleProp<TextStyle> = {
-    // fontFamily: font,
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: 15,
-    lineHeight: 20,
-    textAlign: 'center',
-    letterSpacing: 0.3,
-};
-
-const H7: StyleProp<TextStyle> = {
-    // fontFamily: font,
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: 14,
-    lineHeight: 18,
-    textAlign: 'center',
-    letterSpacing: -0.24,
-};
-
-const H1: StyleProp<TextStyle> = {
+export const H1: StyleProp<TextStyle> = {
     // fontFamily: font,
     fontStyle: 'normal',
     fontWeight: '600',
@@ -41,9 +21,54 @@ const H1: StyleProp<TextStyle> = {
     lineHeight: 28,
     textAlign: 'center',
     letterSpacing: 0.34,
+    color: Colors.basic,
 };
 
-const Body2: StyleProp<TextStyle> = {
+export const H2: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    fontSize: 19,
+    lineHeight: 24,
+    textAlign: 'center',
+    letterSpacing: 0.34,
+    color: Colors.basic,
+};
+
+export const H6: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 20,
+    textAlign: 'center',
+    letterSpacing: 0.3,
+    color: Colors.basic,
+};
+
+export const H7: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 18,
+    textAlign: 'center',
+    letterSpacing: -0.24,
+    color: Colors.basic,
+};
+
+export const Body1: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 22,
+    textAlign: 'center',
+    letterSpacing: -0.24,
+    color: Colors.basic,
+};
+
+export const Body2: StyleProp<TextStyle> = {
     // fontFamily: font,
     fontStyle: 'normal',
     fontWeight: '400',
@@ -51,7 +76,29 @@ const Body2: StyleProp<TextStyle> = {
     lineHeight: 20,
     textAlign: 'center',
     letterSpacing: -0.24,
-    color: Colors.secondary,
+    color: Colors.basic,
 };
 
-export default { Large, H6, H1, H7, Body2 };
+export const Body4: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    fontSize: 13,
+    lineHeight: 16,
+    textAlign: 'center',
+    letterSpacing: -0.24,
+    color: Colors.basic,
+};
+
+export const Body5: StyleProp<TextStyle> = {
+    // fontFamily: font,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    fontSize: 12,
+    lineHeight: 16,
+    textAlign: 'center',
+    letterSpacing: -0.24,
+    color: Colors.basic,
+};
+
+export default { Large, H6, H1, H2, H7, Body2, Body4 };

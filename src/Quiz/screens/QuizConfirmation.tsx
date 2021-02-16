@@ -52,16 +52,16 @@ const styles = {
         justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'column',
-        backgroundColor: Colors.background
+        backgroundColor: Colors.background,
     },
     buttonContainer: {
         flexDirection: 'column',
         justifyContent: 'space-around',
         height: '20%',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     text: {
         textAlign: 'center',
-        color: Colors.basic
-    }
+        color: Colors.basic,
+    },
 };

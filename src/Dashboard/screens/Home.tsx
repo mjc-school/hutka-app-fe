@@ -17,15 +17,16 @@ import { routeNames } from '../../utils/kmlparser';
 // import { KmlLayer, Marker } from "react-google-maps";
 
 export default function Home(props: any) {
-
-    const { navigation, chooseRoute,routeNames, routes, routeImages } = props;
-    const cardData = [...routeNames].map((item,index) => ({caption: item, imageUri: routeImages[index]}))
+    const { navigation, chooseRoute, routeNames, routes, routeImages } = props;
+    const cardData = [...routeNames].map((item, index) => ({
+        caption: item,
+        imageUri: routeImages[index],
+    }));
     console.log(routes);
-    const navigateToMap = ()=> {
-
+    const navigateToMap = () => {
         navigation.navigate('Map');
     };
-    
+
     const press = () => console.log('route');
 
     return (
@@ -55,50 +56,24 @@ export default function Home(props: any) {
                 // onChangeText={this.updateSearch}
                 // value={search}
             /> */}
-            <View style={styles.contentContainer}>
-            <ScrollView
-                horizontal
-                style={styles.horizontalContainer}
-                contentContainerStyle={styles.horizontalPadding}
-            >
-
-                <View  style={styles.horizontalPadding}>
-                    <CardButton
-                        backgroundColor={Colors.accent}
-                        type={'Orange'}
-                        text="Пройти опрос"
-                    />
-                </View>
-                {cardData.map((item, index) =>{
-                        const onPress = ()=> {
-                            chooseRoute(index);
-                            navigateToMap();
-                        };
-                    return (
-                    <View key={index} style={styles.horizontalPadding}>
-                    <RouteImage
-                    key={index}
-                        {...item}
-                        onPress={onPress}
-                    />
-                    </View>
-                    )
-                    })}
-                
-                
-                
-            </ScrollView>
-            </View>
-            {cardData.map((item, index) =>{
-                const onPress = ()=> {                    chooseRoute(index);
-                    navigateToMap()
+            {cardData.map((item, index) => {
+                const onPress = () => {
+                    chooseRoute(index);
+                    navigateToMap();
                 };
                 return (
-                <View key={index} onPress={onPress} style={[styles.contentContainer, {paddingHorizontal: 16}]}>
-                    <RouteCard key={index} {...item} onPress={onPress}/>
-                </View>
-                )}
-            )}
+                    <View
+                        key={index}
+                        onPress={onPress}
+                        style={[
+                            styles.contentContainer,
+                            { paddingHorizontal: 16 },
+                        ]}
+                    >
+                        <RouteCard key={index} {...item} onPress={onPress} />
+                    </View>
+                );
+            })}
         </ScrollView>
     );
 }
@@ -110,15 +85,12 @@ const styles = StyleSheet.create({
         minWidth: '100%',
         backgroundColor: Colors.background,
     },
-    horizontalContainer: {
-        maxHeight: 160,
-    },
+
     contentContainer: {
         marginVertical: 20,
+        paddingHorizontal: 16,
     },
-    horizontalPadding: {
-        marginRight: 20,
-    },
+
     content: {
         alignItems: 'center',
         justifyContent: 'center',

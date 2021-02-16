@@ -90,7 +90,7 @@ const toGeoJSON = (function () {
         return {
             coordinates: ll,
             time: time ? nodeVal(time) : null,
-            heartRate: heartRate ? parseFloat(nodeVal(heartRate)) : null
+            heartRate: heartRate ? parseFloat(nodeVal(heartRate)) : null,
         };
     }
 
@@ -98,7 +98,7 @@ const toGeoJSON = (function () {
     function fc() {
         return {
             type: 'FeatureCollection',
-            features: []
+            features: [],
         };
     }
 
@@ -138,7 +138,7 @@ const toGeoJSON = (function () {
                     'LineString',
                     'Point',
                     'Track',
-                    'gx:Track'
+                    'gx:Track',
                 ],
                 // all root placemarks in the file
                 placemarks = get(doc, 'Placemark'),
@@ -152,13 +152,13 @@ const toGeoJSON = (function () {
             }
             for (let l = 0; l < styleMaps.length; l++) {
                 styleIndex[`#${attr(styleMaps[l], 'id')}`] = okhash(
-                    xml2str(styleMaps[l])
+                    xml2str(styleMaps[l]),
                 ).toString(16);
                 const pairs = get(styleMaps[l], 'Pair');
                 const pairsMap = {};
                 for (let m = 0; m < pairs.length; m++) {
                     pairsMap[nodeVal(get1(pairs[m], 'key'))] = nodeVal(
-                        get1(pairs[m], 'styleUrl')
+                        get1(pairs[m], 'styleUrl'),
                     );
                 }
                 styleMapIndex[`#${attr(styleMaps[l], 'id')}`] = pairsMap;
@@ -179,7 +179,7 @@ const toGeoJSON = (function () {
                     opacity = parseInt(v.substr(0, 2), 16) / 255;
                     color = `#${v.substr(6, 2)}${v.substr(4, 2)}${v.substr(
                         2,
-                        2
+                        2,
                     )}`;
                 }
                 return [color, isNaN(opacity) ? undefined : opacity];
@@ -199,7 +199,7 @@ const toGeoJSON = (function () {
                     times.push(nodeVal(timeElems[j]));
                 return {
                     coords,
-                    times
+                    times,
                 };
             }
             function getGeometry(root) {
@@ -228,15 +228,15 @@ const toGeoJSON = (function () {
                                 geoms.push({
                                     type: 'Point',
                                     coordinates: coord1(
-                                        nodeVal(get1(geomNode, 'coordinates'))
-                                    )
+                                        nodeVal(get1(geomNode, 'coordinates')),
+                                    ),
                                 });
                             } else if (geotypes[i] === 'LineString') {
                                 geoms.push({
                                     type: 'LineString',
                                     coordinates: coord(
-                                        nodeVal(get1(geomNode, 'coordinates'))
-                                    )
+                                        nodeVal(get1(geomNode, 'coordinates')),
+                                    ),
                                 });
                             } else if (geotypes[i] === 'Polygon') {
                                 const rings = get(geomNode, 'LinearRing'),
@@ -245,14 +245,14 @@ const toGeoJSON = (function () {
                                     coords.push(
                                         coord(
                                             nodeVal(
-                                                get1(rings[k], 'coordinates')
-                                            )
-                                        )
+                                                get1(rings[k], 'coordinates'),
+                                            ),
+                                        ),
                                     );
                                 }
                                 geoms.push({
                                     type: 'Polygon',
-                                    coordinates: coords
+                                    coordinates: coords,
                                 });
                             } else if (
                                 geotypes[i] === 'Track' ||
@@ -261,7 +261,7 @@ const toGeoJSON = (function () {
                                 const track = gxCoords(geomNode);
                                 geoms.push({
                                     type: 'LineString',
-                                    coordinates: track.coords
+                                    coordinates: track.coords,
                                 });
                                 if (track.times.length)
                                     coordTimes.push(track.times);
@@ -271,7 +271,7 @@ const toGeoJSON = (function () {
                 }
                 return {
                     geoms,
-                    coordTimes
+                    coordTimes,
                 };
             }
             function getPlacemark(root) {
@@ -332,7 +332,7 @@ const toGeoJSON = (function () {
                 }
                 if (lineStyle) {
                     const linestyles = kmlColor(
-                            nodeVal(get1(lineStyle, 'color'))
+                            nodeVal(get1(lineStyle, 'color')),
                         ),
                         color = linestyles[0],
                         opacity = linestyles[1],
@@ -343,7 +343,7 @@ const toGeoJSON = (function () {
                 }
                 if (polyStyle) {
                     const polystyles = kmlColor(
-                            nodeVal(get1(polyStyle, 'color'))
+                            nodeVal(get1(polyStyle, 'color')),
                         ),
                         pcolor = polystyles[0],
                         popacity = polystyles[1],
@@ -366,7 +366,7 @@ const toGeoJSON = (function () {
 
                     for (i = 0; i < datas.length; i++) {
                         properties[datas[i].getAttribute('name')] = nodeVal(
-                            get1(datas[i], 'value')
+                            get1(datas[i], 'value'),
                         );
                     }
                     for (i = 0; i < simpleDatas.length; i++) {
@@ -391,9 +391,9 @@ const toGeoJSON = (function () {
                             ? geomsAndTimes.geoms[0]
                             : {
                                   type: 'GeometryCollection',
-                                  geometries: geomsAndTimes.geoms
+                                  geometries: geomsAndTimes.geoms,
                               },
-                    properties
+                    properties,
                 };
                 if (attr(root, 'id')) feature.id = attr(root, 'id');
                 return [feature];
@@ -444,7 +444,7 @@ const toGeoJSON = (function () {
                 return {
                     line,
                     times,
-                    heartRates
+                    heartRates,
                 };
             }
             function getTrack(node) {
@@ -466,7 +466,7 @@ const toGeoJSON = (function () {
                             if (!heartRates.length) {
                                 for (let s = 0; s < i; s++) {
                                     heartRates.push(
-                                        initializeArray([], track[s].length)
+                                        initializeArray([], track[s].length),
                                     );
                                 }
                             }
@@ -474,7 +474,7 @@ const toGeoJSON = (function () {
                                 heartRates.push(line.heartRates);
                             } else {
                                 heartRates.push(
-                                    initializeArray([], line.line.length || 0)
+                                    initializeArray([], line.line.length || 0),
                                 );
                             }
                         }
@@ -497,8 +497,8 @@ const toGeoJSON = (function () {
                             track.length === 1
                                 ? 'LineString'
                                 : 'MultiLineString',
-                        coordinates: track.length === 1 ? track[0] : track
-                    }
+                        coordinates: track.length === 1 ? track[0] : track,
+                    },
                 };
             }
             function getRoute(node) {
@@ -511,8 +511,8 @@ const toGeoJSON = (function () {
                     properties: prop,
                     geometry: {
                         type: 'LineString',
-                        coordinates: line.line
-                    }
+                        coordinates: line.line,
+                    },
                 };
                 return routeObj;
             }
@@ -524,8 +524,8 @@ const toGeoJSON = (function () {
                     properties: prop,
                     geometry: {
                         type: 'Point',
-                        coordinates: coordPair(node).coordinates
-                    }
+                        coordinates: coordPair(node).coordinates,
+                    },
                 };
             }
             function getLineStyle(extensions) {
@@ -535,10 +535,10 @@ const toGeoJSON = (function () {
                     if (lineStyle) {
                         const color = nodeVal(get1(lineStyle, 'color')),
                             opacity = parseFloat(
-                                nodeVal(get1(lineStyle, 'opacity'))
+                                nodeVal(get1(lineStyle, 'opacity')),
                             ),
                             width = parseFloat(
-                                nodeVal(get1(lineStyle, 'width'))
+                                nodeVal(get1(lineStyle, 'width')),
                             );
                         if (color) style.stroke = color;
                         if (!isNaN(opacity)) style['stroke-opacity'] = opacity;
@@ -556,7 +556,7 @@ const toGeoJSON = (function () {
                         'desc',
                         'type',
                         'time',
-                        'keywords'
+                        'keywords',
                     ]),
                     links = get(node, 'link');
                 if (links.length) prop.links = [];
@@ -568,7 +568,7 @@ const toGeoJSON = (function () {
                 return prop;
             }
             return gj;
-        }
+        },
     };
     return t;
 })();

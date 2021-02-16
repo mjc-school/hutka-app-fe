@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: 100,
         borderRadius: 50,
-        backgroundColor: 'rgba(47, 128, 237, 0.1)'
-    }
+        backgroundColor: 'rgba(47, 128, 237, 0.1)',
+    },
 });

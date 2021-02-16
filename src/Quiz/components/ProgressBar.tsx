@@ -11,7 +11,7 @@ const ProgressDash = ({ passed }: { passed: boolean }) => (
             width: '5%',
             height: 5,
             margin: 5,
-            backgroundColor: passed ? Colors.accent : Colors.greyLight
+            backgroundColor: passed ? Colors.accent : Colors.greyLight,
         }}
     />
 );
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         maxHeight: 20,
         width: '80%',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
-    textStyles: TextStyles.H1
+    textStyles: TextStyles.H1,
 });
