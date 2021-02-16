@@ -6,7 +6,7 @@ module.exports = {
   },
     root: true,
     parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint"],//,"@react-native-community", "react","react-native", "react-hooks", "eslint-plugin-import-order-alphabetical"],
+    plugins: ["@typescript-eslint", "react-native"],//,"@react-native-community", "react",, "react-hooks", "eslint-plugin-import-order-alphabetical"],
     parserOptions: {
       project: ["./tsconfig.json"],
       ecmaFeatures: {
@@ -52,11 +52,12 @@ module.exports = {
       }
     ],
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-use-before-define": "off",//["error"],
     "import/extensions": ["error", "never"],
     "react/prop-types": 0,
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"]
+    "@typescript-eslint/no-shadow": ["error"],
+    "react-native/no-raw-text": 2,
     }
   };
   

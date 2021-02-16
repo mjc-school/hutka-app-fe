@@ -18,7 +18,7 @@ export default function BottomTabNavigator() {
 
     return (
         <BottomTab.Navigator
-            initialRouteName="Place"
+            initialRouteName="Routes"
             tabBarOptions={{ activeTintColor: Colors.accent }}
             screenOptions={{
                 headerShown: false,
@@ -36,7 +36,7 @@ export default function BottomTabNavigator() {
             />
             <BottomTab.Screen
                 name="Routes"
-                component={Routes}
+                component={Route}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="routes" color={color} />

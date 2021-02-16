@@ -120,8 +120,21 @@ const makeCoordinates = (feature: GeoJSON.Feature<GeoJSON.Geometry>) => {
         return [];
     }
 };
+function isArrayLike(a){
+    return (
+     a!=null &&
+     typeof(a[Symbol.iterator])==='function' &&
+     typeof(a.length)==='number' &&
+     typeof(a)!=='string'
+    );
+   }
 
 const Geojson = (props: any) => {
+    if(props.geojson?.features || isArrayLike(props.geojson?.features)){
+        return null;
+    }
+    debugger;
+
     const overlays = makeOverlays(Array.from(props.geojson.features));
 
     const onMarkerPress = React.useCallback((overlay: Overlay) => {

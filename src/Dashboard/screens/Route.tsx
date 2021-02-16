@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, View, ScrollView, Image, Text } from 'react-native';
+import { List, Checkbox } from 'react-native-paper';
 
 import uuid from 'uuid-random';
 
-import { Colors, H1, H2, Body1, TextStyles, PlaceType } from '../../common';
+import { Colors, H1, H2, Body5, TextStyles, PlaceType, Body4 } from '../../common';
+import { StyledButton } from '../../components';
+import {AccordionCard} from '../../components/AccordionList';
 
 import { routeNames } from '../../utils/kmlparser';
 import { IconWithCaption, HeaderImage, BackButton } from '../components';
@@ -24,6 +27,7 @@ const defaultPlace: PlaceType = {
         'Несвиж — одно из самых туристических мест Белоруссии. Это небольшой городок, в котором, несмотря на многочисленные войны и катаклизмы, сохранились не единичные архитектурные памятники XVI—XVIII веков, а также целый ряд зданий, представляющих архитектуру Речи Посполитой этого периода и отражающих жизнь центра владений крупнейших магнатов, рода Радзивиллов.',
 };
 
+
 const Spacer = ({ children, ...rest }) => (
     <View {...rest}>
         {Array.from(children).map(item => (
@@ -41,31 +45,29 @@ export default function Route(props: { place: PlaceType }) {
 
     return (
         <ScrollView style={styles.container}>
-            <BackButton />
-            <Image
-                style={styles.imageStyles}
-                resizeMode={'cover'}
-                source={{ uri: imgUrl }}
-            />
-            <View style={styles.headerText}>
-                <H1>{name}</H1>
-
-                <IconWithCaption
-                    iconName="map-pin"
-                    iconType="Feather"
-                    caption={locationCaption}
-                    textStyles={[{ color: Colors.secondary }]}
+                <BackButton />
+                <Image
+                    style={styles.imageStyles}
+                    resizeMode={'cover'}
+                    source={{ uri: imgUrl }}
                 />
-            </View>
+                <View style={styles.headerText}>
+                    <H1>{name}</H1>
+                    <View style={{justifyContent: 'space-between', flexDirection: 'row', flex: 0, width: '100%', height: 50, paddingVertical: 8}}>
+                        <IconWithCaption
+                            iconName="map-pin"
+                            iconType="Feather"
+                            caption={locationCaption}
+                            textStyles={[{ color: Colors.secondary }]}
+                        />
+                        <StyledButton text="На карте" buttonStyle="primary"/>
+                    </View>      
+                    <Body5>Описание маршрута</Body5>   
+                </View>
+
             <View style={styles.body}>
-                {/* <HeaderImage imgUrl={imgUrl} /> */}
-
-                <H2 style={{ color: Colors.basic }}>Описание</H2>
-
-                <Body1 style={{ color: Colors.basicSecond }}>
-                    {description}
-                </Body1>
-                <Spacer />
+           
+            <AccordionCard></AccordionCard>
             </View>
         </ScrollView>
     );
@@ -73,30 +75,43 @@ export default function Route(props: { place: PlaceType }) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.background,
+        flex: 1,
     },
     horizontalSpacing: {
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     headerText: {
-        flex: 1,
         width: '100%',
         height: 156,
-
-        justifyContent: 'space-between',
-        flexDirection: 'column',
+        minHeight: 156,
+        padding: 16,
         backgroundColor: Colors.white,
         textAlign: 'left',
-        alignItems: 'flex-start',
-        alignContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
     imageStyles: {
         width: '100%',
-        height: '100%',
+        height: 200,
+        borderRadius: 8,
     },
-
+    AccordionCardImage:{
+        paddingHorizontal: 16,
+        paddingVertical: 13,
+        borderRadius: 30,
+        minHeight: 200,
+    },
+    accordionInnerContainer:{
+        flex: 1,
+        minHeight: 200,
+        minWidth: 200,
+        height: 300,
+        width: '100%',
+    },
     body: {
-        padding: 16,
+        margin: 16,
     },
 });

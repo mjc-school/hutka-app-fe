@@ -3,7 +3,7 @@ import { Action, AnyAction, Dispatch, MiddlewareAPI } from 'redux';
 import {
     AppAction,
     AppActionContext,
-    AppActionContextArgs
+    AppActionContextArgs,
 } from './actionCreators';
 
 /**
@@ -11,7 +11,7 @@ import {
  */
 // tslint:disable-next-line: ban-types
 export type ListenerDispatch<A extends Action = AnyAction> = <T extends A>(
-    action: T extends Function ? never : T
+    action: T extends Function ? never : T,
 ) => T;
 
 // keep an iterator in memory for graph
@@ -32,7 +32,7 @@ type ListenerActionReturn = void | AppAction | Promise<AppAction | void>;
 
 export type ListenerAction<S, T extends AppAction, V> = (
     state: S,
-    action: DiscriminateUnion<T, 'type', V>
+    action: DiscriminateUnion<T, 'type', V>,
 ) => ListenerActionReturn;
 
 export interface ListenerActionFromContextArgs<S, T> {
@@ -42,7 +42,7 @@ export interface ListenerActionFromContextArgs<S, T> {
 }
 
 export type ListenerActionContextBase<S, T> = (
-    args: ListenerActionFromContextArgs<S, T>
+    args: ListenerActionFromContextArgs<S, T>,
 ) => void;
 
 export type ListenerActionFromContext<
@@ -89,12 +89,12 @@ export const createListenerMiddleware = <S>() => {
      */
     type SmartListenerAction<T extends AppAction, V> = (
         store: MiddlewareAPI<Dispatch, S>,
-        action: DiscriminateUnion<T, 'type', V>
+        action: DiscriminateUnion<T, 'type', V>,
     ) => void;
 
     enum ListenerType {
         ListenerAction,
-        SmartListenerAction
+        SmartListenerAction,
     }
 
     interface Listener {
@@ -148,7 +148,7 @@ export const createListenerMiddleware = <S>() => {
      */
     function addListenerOld<V extends string>(types: V | V[]) {
         return <T extends AppAction>(
-            listenerAction: ListenerAction<S, T, V>
+            listenerAction: ListenerAction<S, T, V>,
         ) => {
             const action = {
                 listenerType: ListenerType.ListenerAction,
@@ -159,10 +159,10 @@ export const createListenerMiddleware = <S>() => {
                     any,
                     any,
                     string
-                >
+                >,
             };
 
-            (Array.isArray(types) ? types : [types]).forEach((type) => {
+            (Array.isArray(types) ? types : [types]).forEach(type => {
                 addAction(type, action);
             });
         };
@@ -184,15 +184,15 @@ export const createListenerMiddleware = <S>() => {
      */
     function addListenerNew<V extends AppActionContextArgs>(
         types: V | V[],
-        listenerAction: ListenerActionFromContext<S, V>
+        listenerAction: ListenerActionFromContext<S, V>,
     ) {
         const action = {
             listenerType: ListenerType.ListenerAction,
             destructuringArgs: true,
-            action: listenerAction
+            action: listenerAction,
         };
 
-        (Array.isArray(types) ? types : [types]).forEach((actionContext) => {
+        (Array.isArray(types) ? types : [types]).forEach(actionContext => {
             addAction(actionContext.type, action);
         });
     }
@@ -213,13 +213,13 @@ export const createListenerMiddleware = <S>() => {
      */
     function addListener<V extends AppActionContextArgs>(
         types: V | V[],
-        listenerAction: ListenerActionFromContext<S, V>
+        listenerAction: ListenerActionFromContext<S, V>,
     ): void;
     /**
      * @deprecated Use the `addListener(MyAction.test, ({action, dispatch, getState}) => {})` syntax instead
      */
     function addListener<V extends string>(
-        types: V | V[]
+        types: V | V[],
     ): <T extends AppAction>(listenerAction: ListenerAction<S, T, V>) => void;
     function addListener(types: any, listenerAction?: any): any {
         if (listenerAction) {
@@ -234,7 +234,7 @@ export const createListenerMiddleware = <S>() => {
      */
     function addListeners<V extends string>(types: V[]) {
         return <T extends AppAction>(action: ListenerAction<S, T, V>) => {
-            types.forEach((type) => addListener(type)<T>(action));
+            types.forEach(type => addListener(type)<T>(action));
         };
     }
 
@@ -250,18 +250,18 @@ export const createListenerMiddleware = <S>() => {
      */
     function addSmartListener<V extends string>(type: V) {
         return <T extends AppAction>(
-            listenerAction: SmartListenerAction<T, V>
+            listenerAction: SmartListenerAction<T, V>,
         ) => {
             const action = {
                 listenerType: ListenerType.SmartListenerAction,
-                action: listenerAction
+                action: listenerAction,
             };
             addAction(type, action);
         };
     }
 
     type MergeOnceListenerCallback = (
-        actions: Array<AppAction<Action<string>, any>>
+        actions: Array<AppAction<Action<string>, any>>,
     ) => void;
 
     interface MergeOnceListenerPath {
@@ -283,8 +283,8 @@ export const createListenerMiddleware = <S>() => {
                 ? actionsContexts
                 : [actionsContexts]
             ).map(
-                async (actionContext) =>
-                    new Promise<any>((resolve) => {
+                async actionContext =>
+                    new Promise<any>(resolve => {
                         const registerPromise = {
                             listenerType: ListenerType.ListenerAction,
                             action: (({ action }) =>
@@ -295,16 +295,16 @@ export const createListenerMiddleware = <S>() => {
                             >,
                             once: true,
                             merge: true,
-                            destructuringArgs: true
+                            destructuringArgs: true,
                         } as Listener;
                         addAction(actionContext.type, registerPromise);
-                    })
-            )
+                    }),
+            ),
         );
 
         return {
             callback,
-            actions: actions as Array<ReturnType<V>>
+            actions: actions as Array<ReturnType<V>>,
         };
     }
 
@@ -315,14 +315,14 @@ export const createListenerMiddleware = <S>() => {
      */
     async function mergeOnceListener(
         actionsContexts: AppActionContextArgs | AppActionContextArgs[],
-        callback: MergeOnceListenerCallback
+        callback: MergeOnceListenerCallback,
     ): Promise<void>;
     /**
      * Executes a specific callback when all actions of a path has been dispatched and cancel other paths
      * @param paths Every paths possible that contains all actions to register and the callback to run
      */
     async function mergeOnceListener(
-        paths: MergeOnceListenerPath[]
+        paths: MergeOnceListenerPath[],
     ): Promise<void>;
     async function mergeOnceListener<V extends AppActionContextArgs>(
         ...args:
@@ -335,9 +335,9 @@ export const createListenerMiddleware = <S>() => {
                       args[0].map(({ actionsContexts, callback }) =>
                           waitForAllActionsToBeDispatched(
                               actionsContexts,
-                              callback
-                          )
-                      )
+                              callback,
+                          ),
+                      ),
                   )
                 : await waitForAllActionsToBeDispatched(args[0], args[1]);
 
@@ -351,12 +351,12 @@ export const createListenerMiddleware = <S>() => {
     const pushDataToActionsAnalyzeServer = (
         from: string,
         to: string,
-        data: any
+        data: any,
     ) => {
         axios
             .post(
                 `http://localhost:3000/add?i=${iterator.value++}&from=${from}&to=${to}`,
-                { ...data }
+                { ...data },
             )
             .catch(() => {
                 // Do nothing on error
@@ -365,17 +365,17 @@ export const createListenerMiddleware = <S>() => {
 
     const overrideStoreForGraph = (
         store: MiddlewareAPI<Dispatch, S>,
-        action: AppAction
+        action: AppAction,
     ) => ({
         ...store,
         dispatch: (actionToDispatch: AppAction) => {
             pushDataToActionsAnalyzeServer(
                 action.type,
                 actionToDispatch.type,
-                actionToDispatch.payload
+                actionToDispatch.payload,
             );
             return store.dispatch(actionToDispatch);
-        }
+        },
     });
 
     const middleware = (config: ListenerMiddlewareConfig) => {
@@ -393,7 +393,7 @@ export const createListenerMiddleware = <S>() => {
             } else {
                 // This promise is only to be able to unit test that our "setImmediate" is working as expected.
                 // It is not changing the desired behaviour
-                return new Promise<void>((resolve) => {
+                return new Promise<void>(resolve => {
                     // Performance tests results based on different solutions we tried for dispatch 60 actions back to back:
                     // without setImmediate or setTimeout: 1401 milliseconds
                     // with setTimeout when not using react-native-background: 5374 milliseconds
@@ -412,7 +412,7 @@ export const createListenerMiddleware = <S>() => {
         const runListener = async (
             listener: Listener,
             store: MiddlewareAPI,
-            action: AppAction
+            action: AppAction,
         ) => {
             if (listener.once) {
                 removeAction(action.type, listener);
@@ -425,9 +425,9 @@ export const createListenerMiddleware = <S>() => {
                               store,
                               listener.merge
                                   ? ({
-                                        type: 'MergeOnceListenerAction'
+                                        type: 'MergeOnceListenerAction',
                                     } as AppAction)
-                                  : action
+                                  : action,
                           ) as MiddlewareAPI)
                         : store;
 
@@ -454,7 +454,7 @@ export const createListenerMiddleware = <S>() => {
                                       } else {
                                           setImmediate(() => dispatch(...args));
                                       }
-                                  }) as Dispatch
+                                  }) as Dispatch,
                         });
                     } else {
                         actionToDispatch = await (listener.action as ListenerAction<
@@ -470,7 +470,7 @@ export const createListenerMiddleware = <S>() => {
                                 pushDataToActionsAnalyzeServer(
                                     action.type,
                                     actionToDispatch.type,
-                                    actionToDispatch.payload
+                                    actionToDispatch.payload,
                                 );
                             }
                             store.dispatch(actionToDispatch);
@@ -479,7 +479,7 @@ export const createListenerMiddleware = <S>() => {
                         console.error(
                             'Error to dispatch action, Promise on error',
                             error.message,
-                            error.stack
+                            error.stack,
                         );
                     }
 
@@ -489,16 +489,16 @@ export const createListenerMiddleware = <S>() => {
                         config.generateGraph
                             ? (overrideStoreForGraph(
                                   store,
-                                  action
+                                  action,
                               ) as MiddlewareAPI)
                             : store,
-                        action
+                        action,
                     );
             }
         };
 
         return (store: MiddlewareAPI) => (next: Dispatch) => async (
-            action: AppAction
+            action: AppAction,
         ) => {
             next(action);
 
@@ -507,9 +507,9 @@ export const createListenerMiddleware = <S>() => {
             // Gives the ability to hook on Promises when `dispatch` is called. So during unit tests
             // we can just do `await store.dispatch(...)` and it will wait for all actions to be executed.
             return Promise.all(
-                listenerActions.map((listenerAction) =>
-                    execAsync(() => runListener(listenerAction, store, action))
-                )
+                listenerActions.map(listenerAction =>
+                    execAsync(() => runListener(listenerAction, store, action)),
+                ),
             );
         };
     };
@@ -520,6 +520,6 @@ export const createListenerMiddleware = <S>() => {
         addSmartListener,
         mergeOnceListener,
         flushListener,
-        middleware
+        middleware,
     };
 };

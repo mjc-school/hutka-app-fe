@@ -3,6 +3,7 @@ import {
     DefaultTheme,
     DarkTheme,
 } from '@react-navigation/native';
+import {SafeAreaView} from '@react-navigation/core';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';

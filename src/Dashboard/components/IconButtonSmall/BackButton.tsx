@@ -5,7 +5,7 @@ import { IconButtonSmall } from './index';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../../common';
 
-export const BackButton = (props: { onPress: () => void }) => {
+export const BackButton = () => {
     const navigation = useNavigation();
 
     return (

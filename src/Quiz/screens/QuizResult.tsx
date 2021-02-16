@@ -28,17 +28,17 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-        backgroundColor: Colors.background
+        backgroundColor: Colors.background,
     },
     title: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     separator: {
         marginVertical: 30,
         height: 1,
-        width: '80%'
+        width: '80%',
     },
     headerText: TextStyles.H1,
-    secondaryText: TextStyles.Body2
+    secondaryText: TextStyles.Body2,
 });

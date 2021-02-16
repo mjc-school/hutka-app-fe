@@ -8,7 +8,7 @@ import {
     Text,
     View,
     Image,
-    TextInput
+    TextInput,
 } from 'react-native';
 import { Colors, TextStyles } from '../../../common';
 import { CommonCardStyles } from '..';
@@ -40,7 +40,7 @@ export default (props: InputCard) => {
             />
             <TextInput style={styles.textStyles}></TextInput>
             <View style={styles.buttonsContainer}>
-                {button()} {button()} {button()}
+                {button()}{button()}{button()}
             </View>
         </View>
     );
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexWrap: 'wrap',
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     button: {
         margin: 15,
@@ -63,17 +63,17 @@ const styles = StyleSheet.create({
         borderColor: Colors.greyLight,
         borderWidth: 0.5,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     textContainer: {
         flex: 1,
         maxHeight: '30%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.secondaryButton
+        backgroundColor: Colors.secondaryButton,
     },
     textStyles: {
         ...TextStyles.H1,
-        padding: 30
-    }
+        padding: 30,
+    },
 });

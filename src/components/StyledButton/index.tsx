@@ -4,14 +4,14 @@ import cn from 'react-native-classnames';
 import { Colors, TextStyles } from '../../common';
 import { ButtonProps } from './types';
 
-export default function Button(props: ButtonProps) {
-    const { onPress, text, buttonStyle, textStyle, containerStyles } = props;
+export default function StyledButton(props: ButtonProps) {
+    const { onPress, text, buttonStyle, textStyle, containerStyles, children } = props;
     const ownContainerStyles = { ...cn(styles, 'container', buttonStyle) };
     const textStyles = cn(styles, text, textStyle);
 
     return (
         <TouchableOpacity style={ownContainerStyles} onPress={onPress}>
-            <Text style={textStyles}>{text}</Text>
+            {children ? children :(<Text style={textStyles}>{text}</Text>)}
         </TouchableOpacity>
     );
 }
@@ -22,27 +22,27 @@ const styles = {
         minWidth: 343,
         flex: 0,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     primary: {
         backgroundColor: Colors.primary,
         borderRadius: 8,
         borderStyle: 'solid',
         borderColor: Colors.border,
-        borderWidth: 1
+        borderWidth: 1,
     },
     secondary: {
         backgroundColor: Colors.secondaryButton,
         borderStyle: 'solid',
         borderWidth: 1,
         borderRadius: 8,
-        borderColor: Colors.border
+        borderColor: Colors.border,
     },
     transparent: {
         borderColor: Colors.secondaryButton,
         borderStyle: 'solid',
         borderWidth: 1,
-        borderRadius: 8
+        borderRadius: 8,
     },
-    text: TextStyles.H6
+    text: TextStyles.H6,
 };

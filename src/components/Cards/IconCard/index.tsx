@@ -35,7 +35,11 @@ export default (props: ImageCardProps) => {
 
             <Text style={styles.textStyles}>Как планируешь передвигаться?</Text>
             <View style={styles.buttonsContainer}>
-                {button()} {button()} {button()} {button()} {button()}
+                {button()}
+                {button()}
+                {button()}
+                {button()}
+                {button()}
             </View>
         </View>
     );

@@ -50,10 +50,10 @@ export function makeActionContext<T extends string>(type: T) {
         createAction(type, (payload: P) => ({
             payload,
             meta: {
-                dispatchedTime: Date.now()
+                dispatchedTime: Date.now(),
                 // Uncomment if you need additional stack information
                 // stack : new Error().stack,
-            }
+            },
         }));
 }
 
@@ -68,10 +68,10 @@ export function makeErrorActionContext<T extends string>(type: T) {
             payload,
             error: true,
             meta: {
-                dispatchedTime: Date.now()
+                dispatchedTime: Date.now(),
                 // Uncomment if you need additional stack information
                 // stack : new Error().stack,
-            }
+            },
         }));
 }
 
@@ -85,10 +85,10 @@ export function makeSynchronousActionContext<T extends string>(type: T) {
             payload,
             meta: {
                 synchronous: true,
-                dispatchedTime: Date.now()
+                dispatchedTime: Date.now(),
                 // Uncomment if you need additional stack information
                 // stack : new Error().stack,
-            }
+            },
         }));
 }
 

@@ -1,3 +1,4 @@
+import { ReactChild } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 export type ButtonProps = {
@@ -6,4 +7,5 @@ export type ButtonProps = {
     textStyle?: StyleProp<TextStyle>;
     onPress?: (event) => void;
     containerStyles?: StyleProp<ViewStyle>;
+    children?: ReactChild| ReactChild[];
 };

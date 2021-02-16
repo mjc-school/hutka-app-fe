@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, Platform } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 // import { KmlLayer } from "react-google-maps";
 
 import Geojson, { makeOverlays } from './GeoJson';
@@ -39,10 +39,11 @@ const point = JSON.parse(`{
 
 export default function MyMap(props) {
     const { data } = props;
-    const geojsonLike = { features: data };
+    const geojsonLike = { features: data || [] };
     return (
         <MapView
             style={styles.mapStyle}
+            provider={PROVIDER_GOOGLE}
             defaultZoom={6}
             region={{
                 latitude: 53.893,

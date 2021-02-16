@@ -14,8 +14,6 @@ export const Large: StyleProp<TextStyle> = {
     color: Colors.basic,
 };
 export const H1: StyleProp<TextStyle> = {
-    height: '28',
-    width: '100',
     // fontFamily: font,
     fontStyle: 'normal',
     fontWeight: '600',

@@ -16,14 +16,14 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        minWidth: '35%'
+        minWidth: '35%',
     },
     imageStyles: {
         flex: 1,
         width: '100%',
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        opacity: 0.85
+        opacity: 0.85,
     },
     textContainer: {
         flex: 1,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Colors.secondaryButton,
         borderBottomStartRadius: 16,
-        borderBottomEndRadius: 16
+        borderBottomEndRadius: 16,
     },
-    textStyles: TextStyles.H1
+    textStyles: TextStyles.H1,
 });
