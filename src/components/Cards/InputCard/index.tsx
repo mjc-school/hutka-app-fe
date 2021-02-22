@@ -13,6 +13,7 @@ import {
 import { Colors, TextStyles } from '../../../common';
 import { CommonCardStyles } from '..';
 import { IconHead } from '../IconHead';
+import { ToggleButton } from '../ToggleButton';
 
 const styles = StyleSheet.create({
     buttonsContainer: {
@@ -21,17 +22,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         flexBasis: 'auto',
-    },
-    button: {
-        margin: 5,
-        maxHeight: 40,
-        borderRadius: 8,
-        textAlign: 'left',
-        padding: 10,
-        borderColor: Colors.greyLight,
-        borderWidth: 0.5,
-        flexDirection: 'row',
-        alignItems: 'center',
     },
     searchControls: {
         flex: 0,
@@ -65,7 +55,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const cities = [
+const items = [
     'Минск',
     'Могилев',
     'Гомель',
@@ -77,14 +67,6 @@ const cities = [
     'Барановичи',
 ];
 
-const CityButton = ({ city }: { city: string }) => {
-    return (
-        <TouchableOpacity style={styles.button}>
-            <Text>{city}</Text>
-        </TouchableOpacity>
-    );
-};
-
 type InputCardProps = {
     caption: string;
     updateResult: (value: string) => void;
@@ -92,6 +74,33 @@ type InputCardProps = {
 
 export default function InputCard(props: InputCardProps) {
     const { caption, updateResult } = props;
+    const [inputText, setInputText] = React.useState('');
+    const [selected, setSelected] = React.useState(null);
+
+    const isItemSelected = React.useCallback(
+        (city: string) => (selected ? city === selected : false),
+        [selected],
+    );
+
+    const onChangeText = React.useCallback(
+        (value: string) => {
+            const mathcing = items.find(option => option === value) || null;
+            updateResult(mathcing);
+            setSelected(mathcing);
+            setInputText(value);
+        },
+        [updateResult],
+    );
+
+    const onItemPress = React.useCallback(
+        (item: string) => {
+            const newValue = selected === item ? null : item;
+            setSelected(newValue);
+            updateResult(newValue);
+            setInputText(newValue ? newValue : '');
+        },
+        [selected, updateResult],
+    );
 
     return (
         <View style={CommonCardStyles.container}>
@@ -104,7 +113,8 @@ export default function InputCard(props: InputCardProps) {
             <View style={styles.searchControls}>
                 <TextInput
                     style={styles.searchControl}
-                    onChangeText={updateResult}
+                    value={inputText}
+                    onChangeText={onChangeText}
                     placeholderTextColor={Colors.greyLight}
                     placeholder="Начни вводить место"
                 ></TextInput>
@@ -113,8 +123,13 @@ export default function InputCard(props: InputCardProps) {
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonsContainer}>
-                {cities.map((city, i) => (
-                    <CityButton key={i} city={city} />
+                {items.map(item => (
+                    <ToggleButton
+                        key={item}
+                        label={item}
+                        isSelected={isItemSelected(item)}
+                        onPress={() => onItemPress(item)}
+                    />
                 ))}
             </View>
         </View>
