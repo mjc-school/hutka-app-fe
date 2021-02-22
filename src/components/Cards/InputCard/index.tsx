@@ -85,13 +85,13 @@ const CityButton = ({ city }: { city: string }) => {
     );
 };
 
-type InputCard = {
+type InputCardProps = {
     caption: string;
-    imageUri: string;
+    updateResult: (value: string) => void;
 };
 
-export default function InputCard(props: InputCard) {
-    const { imageUri, caption } = props;
+export default function InputCard(props: InputCardProps) {
+    const { caption, updateResult } = props;
 
     return (
         <View style={CommonCardStyles.container}>
@@ -100,10 +100,11 @@ export default function InputCard(props: InputCard) {
                 name="map-marker"
                 color={Colors.accent}
             />
-            <Text style={styles.textStyles}>Из какого города стартуешь?</Text>
+            <Text style={styles.textStyles}>{caption}</Text>
             <View style={styles.searchControls}>
                 <TextInput
                     style={styles.searchControl}
+                    onChangeText={updateResult}
                     placeholderTextColor={Colors.greyLight}
                     placeholder="Начни вводить место"
                 ></TextInput>

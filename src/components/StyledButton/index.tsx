@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, Pressable } from 'react-native';
 import cn from 'react-native-classnames';
 import { Colors, TextStyles } from '../../common';
 import { ButtonProps } from './types';
@@ -9,17 +9,24 @@ export default function StyledButton(props: ButtonProps) {
         onPress,
         text,
         buttonStyle,
+        disabled,
         textStyle,
         containerStyles,
         children,
     } = props;
-    const ownContainerStyles = { ...cn(styles, 'container', buttonStyle) };
+    const ownContainerStyles = {
+        ...cn(styles, 'container', buttonStyle, { disabled }),
+    };
     const textStyles = cn(styles, 'text', textStyle);
 
     return (
-        <TouchableOpacity style={ownContainerStyles} onPress={onPress}>
+        <Pressable
+            disabled={disabled}
+            style={ownContainerStyles}
+            onPress={onPress}
+        >
             {children ? children : <Text style={textStyles}>{text}</Text>}
-        </TouchableOpacity>
+        </Pressable>
     );
 }
 
@@ -50,6 +57,9 @@ const styles = {
         borderStyle: 'solid',
         borderWidth: 1,
         borderRadius: 8,
+    },
+    disabled: {
+        opacity: 0.5,
     },
     text: TextStyles.H6,
 };
