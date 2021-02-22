@@ -93,29 +93,24 @@ export default function QuizSwipable(props) {
             </View>
 
             {cardSetups[cardIndex] instanceof ImageCardSetup ? (
-                <View style={styles.buttonContainer}>
-                    <IconCircleButton
-                        color="#000000"
-                        name="close"
-                        iconType="EvilIcons"
-                        onPress={() => swiperRef.swipeLeft()}
-                    />
-                    <IconCircleButton
-                        color="#e76b6b"
-                        name="heart"
-                        iconType="FontAwesome"
-                        onPress={() => swiperRef.swipeRight()}
-                    />
+                <View style={styles.primaryButtonsWrapper}>
+                    <View style={styles.iconButtonsContainer}>
+                        <IconCircleButton
+                            color="#000000"
+                            name="close"
+                            iconType="EvilIcons"
+                            onPress={() => swiperRef.swipeLeft()}
+                        />
+                        <IconCircleButton
+                            color="#e76b6b"
+                            name="heart"
+                            iconType="FontAwesome"
+                            onPress={() => swiperRef.swipeRight()}
+                        />
+                    </View>
                 </View>
             ) : (
-                <View
-                    style={{
-                        alignSelf: 'center',
-                        top: '80%',
-                        marginTop: 14, // push content below the same way as buttonContainer
-                        marginBottom: 10,
-                    }}
-                >
+                <View style={styles.primaryButtonsWrapper}>
                     <StyledButton
                         disabled={!currCardValid}
                         buttonStyle="primary"
@@ -161,17 +156,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white',
     },
-    buttonContainer: {
+    primaryButtonsWrapper: {
+        alignSelf: 'center',
+        top: '80%',
+        marginTop: 14,
+        marginBottom: 10,
+    },
+    iconButtonsContainer: {
         flex: 0,
         flexBasis: 'auto',
         flexDirection: 'row',
         justifyContent: 'space-between',
         minWidth: 150,
-        marginBottom: 10,
-        maxHeight: '10%',
         alignItems: 'center',
-        alignSelf: 'center',
-        top: '80%',
     },
     text: {
         textAlign: 'center',

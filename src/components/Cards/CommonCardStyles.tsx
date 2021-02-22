@@ -9,7 +9,7 @@ export const CommonCardStyles = StyleSheet.create({
         borderColor: Colors.border,
         minWidth: '60%',
         maxWidth: '100%',
-        maxHeight: '90%',
+        maxHeight: '80%', // TODO: web - 90%, ios - 80% (???)
         borderWidth: 0.5,
         borderStyle: 'solid',
         borderRadius: 16,

@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     searchControl: {
+        width: '60%',
         padding: 8,
         fontSize: 16,
     },
