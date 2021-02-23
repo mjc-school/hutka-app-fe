@@ -16,4 +16,5 @@ export default {
     cardBackround: '#FFFFFF',
     background: '#E5E5E5',
     white: '#FFFF',
+    textBasic: '#1F1F1F'
 };

@@ -6,11 +6,11 @@ import { ButtonProps } from './types';
 
 export default function StyledButton(props: ButtonProps) {
     const { onPress, text, buttonStyle, textStyle, containerStyles, children } = props;
-    const ownContainerStyles = { ...cn(styles, 'container', buttonStyle) };
+    const ownContainerStyles = { ...cn(styles, 'container', buttonStyle), };
     const textStyles = cn(styles, text, textStyle);
 
     return (
-        <TouchableOpacity style={ownContainerStyles} onPress={onPress}>
+        <TouchableOpacity style={[ownContainerStyles, containerStyles]} onPress={onPress}>
             {children ? children :(<Text style={textStyles}>{text}</Text>)}
         </TouchableOpacity>
     );

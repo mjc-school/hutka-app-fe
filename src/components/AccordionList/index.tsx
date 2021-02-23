@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { Component, ReactElement } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ViewProps } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Body4, H7, H2, Colors } from '../../common';
 
@@ -10,7 +10,11 @@ interface AccordionCardType {
   description: string;
 }
 
-const Right = ({style, children, ...otherProps}) =>
+interface RightProps extends ViewProps {
+  children: ReactElement;
+}
+
+const Right = ({style, children, ...otherProps}: RightProps) =>
   (<View style={[{flex: 1,
     alignSelf: 'center',
     alignItems: 'flex-end' },style]}>{children}</View>)
@@ -29,7 +33,7 @@ const SECTIONS: AccordionCardType[] = [
   },
 ];
 
-export class AccordionCard extends Component {
+export class AccordionCardList extends Component {
   state = {
     activeSections: [],
   };
@@ -45,26 +49,39 @@ export class AccordionCard extends Component {
   // key,
   // activeSections.includes(key),
   // sections
-  _renderHeader = (card, key, isActive)=> {
-    const {title, description, imageURL} = card;
+  _renderHeader = (card, key, isActive) => {
+    const { title, description, imageURL } = card;
+  
     return (
-      <View style={styles.header}>
-        {!isActive ? <Image
-                    style={styles.imageStylesCollapsed}
-                    source={{ uri: imageURL }}
-                /> : null}
-                <H7>{(key + 1)+ '. '+title}</H7>
-                <Right>
-                <Ionicons size={16} name={isActive ? 'chevron-up-outline' :'chevron-down-outline'}/>
-                </Right>
-      </View>
+      <>
+        {isActive ? (
+          <View style={[styles.header, styles.roundTopBorders]}>
+            <H7>{"  " + (key + 1) + ". " + title}</H7>
+            <Right>
+              <Ionicons size={16} name={"chevron-up-outline"} />
+            </Right>
+          </View>
+        ) : (
+          <View style={[styles.header, styles.roundBorders]}>
+            <Image
+              style={styles.imageStylesCollapsed}
+              source={{ uri: imageURL }}
+            />
+            <H7>{"  " + (key + 1) + ". " + title}</H7>
+            <Right>
+              <Ionicons size={16} name={"chevron-down-outline"} />
+            </Right>
+          </View>
+        )}
+      </>
     );
   };
+  
 
   _renderContent = (card) => {
     const {title, description, imageURL} = card;
     return (
-      <View style={styles.content}>
+      <View style={[styles.content, styles.roundBottomBorders]}>
         <Image
                     style={styles.imageStylesActivated}
                     source={{ uri: imageURL }}
@@ -88,6 +105,7 @@ export class AccordionCard extends Component {
         renderContent={this._renderContent}
         onChange={this._updateSections}
         containerStyle={styles.container}
+        sectionContainerStyle={{borderRadius: 8}}
         touchableComponent={TouchableOpacity}
       />
     );
@@ -97,9 +115,7 @@ export class AccordionCard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    paddingTop: 42,
-    borderRadius:8, 
+    marginBottom: 12,
   },
   imageStylesCollapsed:{
     width: 36,
@@ -110,6 +126,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 180,
     borderRadius: 8,
+    marginBottom: 12,
   },
   title: {
     textAlign: 'center',
@@ -121,12 +138,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingVertical: 12, paddingRight: 20,
+    paddingVertical: 10, paddingRight: 20,
     paddingLeft: 12,
-    borderRadius: 8,
   },
   footer:{
-    paddingTop:12,
+    paddingTop: 12,
   },
   headerText: {
     textAlign: 'center',
@@ -134,10 +150,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   content: {
-    padding: 20,
+    paddingHorizontal: 16,
+    paddingTop: 3,
+    paddingBottom: 16,
     backgroundColor: '#fff',
-    borderRadius: 8,
-    marginTop: 12,
   },
   active: {
     backgroundColor: Colors.accent,
@@ -145,18 +161,10 @@ const styles = StyleSheet.create({
   inactive: {
     backgroundColor: Colors.background,
   },
-  selectors: {
-    marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  selector: {
-    backgroundColor: '#F5FCFF',
-    padding: 10,
-  },
-  activeSelector: {
-    fontWeight: 'bold',
-  },
+  roundTopBorders:{borderTopRightRadius: 8, borderTopLeftRadius:8},
+  roundBottomBorders:{borderBottomLeftRadius:8, borderBottomRightRadius: 8},
+  roundBorders: {borderRadius: 8,},
+
   selectTitle: {
     fontSize: 14,
     fontWeight: '500',
