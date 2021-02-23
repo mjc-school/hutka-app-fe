@@ -1,27 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Swiper from 'react-native-deck-swiper';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import {
-    IconButton,
-    ImageCard,
-    IconCard,
-    InputCard,
-    StyledButton,
-} from '../../components';
+import { StyleSheet, Text, View } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+
+import { IconCircleButton, StyledButton } from '../../components';
 import { Colors } from '../../common';
 import { ProgressBar } from '../components/ProgressBar';
+import {
+    CardSetup,
+    IconCardSetup,
+    ImageCardSetup,
+    InputCardSetup,
+} from './CardSetup';
+
+const cardSetups: CardSetup[] = [
+    new IconCardSetup('', '', 'Как планируешь передвигаться?'),
+    new ImageCardSetup('', 'Хочешь отдохнуть на природе?'),
+    new InputCardSetup('', '', 'Из какого города стартуешь?'),
+];
 
 export default function QuizSwipable(props) {
     const { navigation } = props;
-    const [swipedAllCards, setSwipedAllCards] = useState(false);
     const [cardIndex, setCardIndex] = useState(0);
+    const [currCardValid, setCurrCardValid] = useState(
+        cardSetups[cardIndex] instanceof ImageCardSetup,
+    );
     const [swipeDirection, setSwipeDirection] = useState('');
 
-    const swiperRef = useRef();
-
-    const onSwiped = type => {
-        console.log(`on swiped ${type}`);
-    };
+    let swiperRef: any;
 
     const Examplecard = {
         type: 'imageCard',
@@ -31,49 +37,45 @@ export default function QuizSwipable(props) {
         parameter: 'nature',
         result: undefined,
     };
-    const cards = ['IconCard', 'ImageCard', 'InputCard'];
 
-    const renderCard = card => {
-        if (card === 'InputCard') {
-            return <InputCard />;
-        }
-        if (card === 'IconCard') {
-            return <IconCard />;
-        }
-        if (card === 'ImageCard') {
+    const onSwiped = React.useCallback((idx: number) => {
+        setCurrCardValid(cardSetups[idx + 1] instanceof ImageCardSetup);
+        setCardIndex(idx + 1);
+    }, []);
+
+    const renderCard = (card: CardSetup) => {
+        if (card instanceof CardSetup) {
             return (
-                <ImageCard
-                    imageUri={Examplecard.imageUri}
-                    caption={Examplecard.caption}
+                <card.component
+                    {...card}
+                    updateResult={value => {
+                        card.setResult(value);
+                        setCurrCardValid(card.valid);
+                    }}
                 />
             );
         }
         return <View />;
     };
 
-    const onSwipedAllCards = () => setSwipedAllCards(false);
-
-    const swipeLeft = () => {
-        swiperRef.swipeLeft();
+    const onSwipedAll = () => {
+        navigation.navigate('QuizWaiting');
     };
+
     const onGoToDashboard = () => {
         navigation.navigate('Dashboard');
     };
 
     return (
         <View style={styles.container}>
-            <ProgressBar maxItems={cards.length} currentItem={cardIndex} />
+            <ProgressBar maxItems={cardSetups.length} currentItem={cardIndex} />
             <View style={styles.cardContainer}>
                 <Swiper
-                    ref={swiperRef}
-                    cards={cards}
+                    ref={swiper => (swiperRef = swiper)}
+                    cards={cardSetups}
                     renderCard={renderCard}
-                    onSwiped={cardIndex => {
-                        setCardIndex(cardIndex);
-                    }}
-                    onSwipedAll={() => {
-                        setSwipedAllCards(true);
-                    }}
+                    onSwiped={onSwiped}
+                    onSwipedAll={onSwipedAll}
                     cardIndex={0}
                     containerStyle={{
                         flex: 1,
@@ -82,20 +84,45 @@ export default function QuizSwipable(props) {
                         alignSelf: 'baseline',
                     }}
                     backgroundColor={Colors.greyLight}
-                    disableTopSwipe
-                    disableBottomSwipe
+                    verticalSwipe={false}
+                    horizontalSwipe={
+                        cardSetups[cardIndex] instanceof ImageCardSetup
+                    }
                     stackSize={1}
                 />
             </View>
 
-            <View style={styles.buttonContainer}>
-                <IconButton
-                    color="#e76b6b"
-                    name="heart"
-                    iconType="FontAwesome"
-                />
-                <IconButton color="#000000" name="close" iconType="EvilIcons" />
-            </View>
+            {cardSetups[cardIndex] instanceof ImageCardSetup ? (
+                <View style={styles.primaryButtonsWrapper}>
+                    <View style={styles.iconButtonsContainer}>
+                        <IconCircleButton
+                            color="#000000"
+                            name="close"
+                            iconType="EvilIcons"
+                            onPress={() => swiperRef.swipeLeft()}
+                        />
+                        <IconCircleButton
+                            color="#e76b6b"
+                            name="heart"
+                            iconType="FontAwesome"
+                            onPress={() => swiperRef.swipeRight()}
+                        />
+                    </View>
+                </View>
+            ) : (
+                <View style={styles.primaryButtonsWrapper}>
+                    <StyledButton
+                        disabled={!currCardValid}
+                        buttonStyle="primary"
+                        onPress={() => swiperRef.swipeRight()}
+                    >
+                        <Text>
+                            {'Далее  '}
+                            <FontAwesome5 name="chevron-right" />
+                        </Text>
+                    </StyledButton>
+                </View>
+            )}
 
             <View style={{ alignSelf: 'center', top: '80%' }}>
                 <StyledButton
@@ -129,16 +156,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white',
     },
-    buttonContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        minWidth: '35%',
-
-        maxHeight: '10%',
-        alignItems: 'center',
+    primaryButtonsWrapper: {
         alignSelf: 'center',
         top: '80%',
+        marginTop: 14,
+        marginBottom: 10,
+    },
+    iconButtonsContainer: {
+        flex: 0,
+        flexBasis: 'auto',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minWidth: 150,
+        alignItems: 'center',
     },
     text: {
         textAlign: 'center',

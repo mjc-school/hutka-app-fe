@@ -37,9 +37,9 @@ function RootNavigator() {
     return (
         <Stack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName="Dashboard"
+            initialRouteName="QuizStack"
         >
-            {/* <Stack.Screen name="QuizStack" component={QuizNavigator} /> */}
+            <Stack.Screen name="QuizStack" component={QuizNavigator} />
             <Stack.Screen name="Dashboard" component={Dashboard} />
             {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
         </Stack.Navigator>

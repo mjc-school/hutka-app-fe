@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         minHeight: 150,
         backgroundColor: Colors.cardBackround,
-        // margin: 15,
     },
     imageContainer: {
         maxWidth: '30%',

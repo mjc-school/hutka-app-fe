@@ -13,57 +13,35 @@ import {
 import { Colors, TextStyles } from '../../../common';
 import { CommonCardStyles } from '..';
 import { IconHead } from '../IconHead';
-
-const button = () => {
-    return (
-        <TouchableOpacity style={styles.button}>
-            <FontAwesome5 name="bicycle" />
-            <Text>Велосипед</Text>
-        </TouchableOpacity>
-    );
-};
-
-type InputCard = {
-    caption: string;
-    imageUri: string;
-};
-
-export default (props: InputCard) => {
-    const { imageUri, caption } = props;
-
-    return (
-        <View style={CommonCardStyles.container}>
-            <IconHead
-                iconType="MaterialCommunityIcons"
-                name="map-marker"
-                color={Colors.accent}
-            />
-            <TextInput style={styles.textStyles}></TextInput>
-            <View style={styles.buttonsContainer}>
-                {button()}{button()}{button()}
-            </View>
-        </View>
-    );
-};
+import { ToggleButton } from '../ToggleButton';
 
 const styles = StyleSheet.create({
     buttonsContainer: {
-        flex: 1,
+        flex: 0,
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'center',
+        flexBasis: 'auto',
     },
-    button: {
-        margin: 15,
-        minWidth: '20%',
-        maxHeight: 40,
-        borderRadius: 8,
-        textAlign: 'left',
-        padding: 5,
-        borderColor: Colors.greyLight,
-        borderWidth: 0.5,
+    searchControls: {
+        flex: 0,
+        flexBasis: 'auto',
         flexDirection: 'row',
-        alignItems: 'center',
+        padding: 8,
+        marginBottom: 5,
+        backgroundColor: '#E5E5E5',
+        borderRadius: 8,
+    },
+    searchControl: {
+        width: '60%',
+        padding: 8,
+        fontSize: 16,
+    },
+    mapButton: {
+        padding: 8,
+        paddingRight: 4,
+        borderLeftColor: Colors.greyLight,
+        borderLeftWidth: 0.5,
     },
     textContainer: {
         flex: 1,
@@ -77,3 +55,84 @@ const styles = StyleSheet.create({
         padding: 30,
     },
 });
+
+const items = [
+    'Минск',
+    'Могилев',
+    'Гомель',
+    'Брест',
+    'Гродно',
+    'Витебск',
+    'Молодечно',
+    'Орша',
+    'Барановичи',
+];
+
+type InputCardProps = {
+    caption: string;
+    updateResult: (value: string) => void;
+};
+
+export default function InputCard(props: InputCardProps) {
+    const { caption, updateResult } = props;
+    const [inputText, setInputText] = React.useState('');
+    const [selected, setSelected] = React.useState(null);
+
+    const isItemSelected = React.useCallback(
+        (city: string) => (selected ? city === selected : false),
+        [selected],
+    );
+
+    const onChangeText = React.useCallback(
+        (value: string) => {
+            const mathcing = items.find(option => option === value) || null;
+            updateResult(mathcing);
+            setSelected(mathcing);
+            setInputText(value);
+        },
+        [updateResult],
+    );
+
+    const onItemPress = React.useCallback(
+        (item: string) => {
+            const newValue = selected === item ? null : item;
+            setSelected(newValue);
+            updateResult(newValue);
+            setInputText(newValue ? newValue : '');
+        },
+        [selected, updateResult],
+    );
+
+    return (
+        <View style={CommonCardStyles.container}>
+            <IconHead
+                iconType="MaterialCommunityIcons"
+                name="map-marker"
+                color={Colors.accent}
+            />
+            <Text style={styles.textStyles}>{caption}</Text>
+            <View style={styles.searchControls}>
+                <TextInput
+                    style={styles.searchControl}
+                    value={inputText}
+                    onChangeText={onChangeText}
+                    placeholderTextColor={Colors.greyLight}
+                    placeholder="Начни вводить место"
+                ></TextInput>
+                <TouchableOpacity style={styles.mapButton}>
+                    <Text style={{ color: Colors.secondary }}>Карта</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.buttonsContainer}>
+                {items.map(item => (
+                    <ToggleButton
+                        key={item}
+                        label={item}
+                        isSelected={isItemSelected(item)}
+                        onPress={() => onItemPress(item)}
+                    />
+                ))}
+            </View>
+        </View>
+    );
+}

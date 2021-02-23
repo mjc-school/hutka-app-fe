@@ -6,10 +6,9 @@ import { Colors, TextStyles } from '../../common';
 export default function QuizWaiting(props: any) {
     const { navigation } = props;
 
-    const onGoToDashboard = () => {
-        navigation.navigate('Dashboard');
-    };
-    setTimeout(() => onGoToDashboard(), 1000);
+    React.useEffect(() => {
+        setTimeout(() => navigation.navigate('Dashboard'), 2000);
+    }, [navigation]);
 
     return (
         <View style={styles.container}>
