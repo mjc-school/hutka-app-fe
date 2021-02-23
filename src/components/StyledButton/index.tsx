@@ -5,28 +5,14 @@ import { Colors, TextStyles } from '../../common';
 import { ButtonProps } from './types';
 
 export default function StyledButton(props: ButtonProps) {
-    const {
-        onPress,
-        text,
-        buttonStyle,
-        disabled,
-        textStyle,
-        containerStyles,
-        children,
-    } = props;
-    const ownContainerStyles = {
-        ...cn(styles, 'container', buttonStyle, { disabled }),
-    };
-    const textStyles = cn(styles, 'text', textStyle);
+    const { onPress, text, buttonStyle, disabled, textStyle, containerStyles, children } = props;
+    const ownContainerStyles = { ...cn(styles, 'container', buttonStyle, { disabled }), };
+    const textStyles = cn(styles, text, textStyle);
 
     return (
-        <Pressable
-            disabled={disabled}
-            style={ownContainerStyles}
-            onPress={onPress}
-        >
-            {children ? children : <Text style={textStyles}>{text}</Text>}
-        </Pressable>
+        <TouchableOpacity disabled={disabled} style={[ownContainerStyles, containerStyles]} onPress={onPress}>
+            {children ? children :(<Text style={textStyles}>{text}</Text>)}
+        </TouchableOpacity>
     );
 }
 
