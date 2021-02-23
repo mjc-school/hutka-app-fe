@@ -1,32 +1,16 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { Colors, TextStyles } from '../../../common';
 import { IconHead } from '../IconHead';
 import { CommonCardStyles } from '..';
+import { ToggleButton } from '../ToggleButton';
 
 const styles = StyleSheet.create({
     buttonsContainer: {
         flex: 0,
         flexWrap: 'wrap',
         flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    button: {
-        // flex: 0,
-        margin: 5,
-        // minWidth: '23%',
-        // maxWidth: '30%',
-        maxHeight: 40,
-        borderRadius: 8,
-        textAlign: 'left',
-        padding: 10,
-        borderColor: Colors.greyLight,
-        borderWidth: 0.5,
-        flexDirection: 'row',
-        alignItems: 'center',
-        textAlignVertical: 'center',
         justifyContent: 'center',
     },
     textContainer: {
@@ -42,23 +26,11 @@ const styles = StyleSheet.create({
     },
 });
 
-interface TransportButtonProps {
-    isSelected: boolean;
-    label: string;
-}
-const TransportButton = (props: TransportButtonProps) => {
-    return (
-        <TouchableOpacity style={styles.button}>
-            <Text numberOfLines={1}>
-                <Text>{props.label}</Text>
-            </Text>
-        </TouchableOpacity>
-    );
-};
-
-export type ImageCardProps = {
+export type IconCardProps = {
     caption: string;
-    choises?: string;
+    result: string[];
+    updateResult: (value: string[]) => void;
+    options?: string;
 };
 
 interface TransportCardDefinition {
@@ -74,14 +46,32 @@ const TransportCardDefinitions: readonly TransportCardDefinition[] = [
     { id: 'walk', label: 'Я гуляю', emoji: '💃' },
 ];
 
-export default function IconCard(props: ImageCardProps) {
-    const { caption } = props;
-    const [selectedTransportDefs] = React.useState([]);
+export default function IconCard(props: IconCardProps) {
+    const { caption, updateResult } = props;
+    const [selectedTransportDefs, setselectedTransportDefs] = React.useState(
+        new Set<TransportCardDefinition>(),
+    );
 
     const isTransportSelected = React.useCallback(
-        (def: TransportCardDefinition) =>
-            selectedTransportDefs.find(selectedDef => selectedDef === def),
+        (def: TransportCardDefinition) => selectedTransportDefs.has(def),
         [selectedTransportDefs],
+    );
+
+    const onTransportButtonCLick = React.useCallback(
+        (def: TransportCardDefinition) => {
+            const newSet = new Set<TransportCardDefinition>(
+                selectedTransportDefs,
+            );
+
+            if (newSet.has(def)) {
+                newSet.delete(def);
+            } else {
+                newSet.add(def);
+            }
+            updateResult([...newSet].map(d => d.id));
+            setselectedTransportDefs(newSet);
+        },
+        [selectedTransportDefs, updateResult],
     );
 
     return (
@@ -92,14 +82,15 @@ export default function IconCard(props: ImageCardProps) {
                 color={Colors.accent}
             />
 
-            <Text style={styles.textStyles}>Как планируешь передвигаться?</Text>
+            <Text style={styles.textStyles}>{caption}</Text>
             <View style={{ flex: 0, flexBasis: 'auto' }}>
                 <View style={styles.buttonsContainer}>
                     {TransportCardDefinitions.map(t => (
-                        <TransportButton
+                        <ToggleButton
                             key={t.id}
                             label={`${t.emoji} ${t.label}`}
                             isSelected={isTransportSelected(t)}
+                            onPress={() => onTransportButtonCLick(t)}
                         />
                     ))}
                 </View>

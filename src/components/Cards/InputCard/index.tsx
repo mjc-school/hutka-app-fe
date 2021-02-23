@@ -13,6 +13,7 @@ import {
 import { Colors, TextStyles } from '../../../common';
 import { CommonCardStyles } from '..';
 import { IconHead } from '../IconHead';
+import { ToggleButton } from '../ToggleButton';
 
 const styles = StyleSheet.create({
     buttonsContainer: {
@@ -21,17 +22,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         flexBasis: 'auto',
-    },
-    button: {
-        margin: 5,
-        maxHeight: 40,
-        borderRadius: 8,
-        textAlign: 'left',
-        padding: 10,
-        borderColor: Colors.greyLight,
-        borderWidth: 0.5,
-        flexDirection: 'row',
-        alignItems: 'center',
     },
     searchControls: {
         flex: 0,
@@ -43,6 +33,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     searchControl: {
+        width: '60%',
         padding: 8,
         fontSize: 16,
     },
@@ -65,7 +56,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const cities = [
+const items = [
     'Минск',
     'Могилев',
     'Гомель',
@@ -77,21 +68,40 @@ const cities = [
     'Барановичи',
 ];
 
-const CityButton = ({ city }: { city: string }) => {
-    return (
-        <TouchableOpacity style={styles.button}>
-            <Text>{city}</Text>
-        </TouchableOpacity>
-    );
-};
-
-type InputCard = {
+type InputCardProps = {
     caption: string;
-    imageUri: string;
+    updateResult: (value: string) => void;
 };
 
-export default function InputCard(props: InputCard) {
-    const { imageUri, caption } = props;
+export default function InputCard(props: InputCardProps) {
+    const { caption, updateResult } = props;
+    const [inputText, setInputText] = React.useState('');
+    const [selected, setSelected] = React.useState(null);
+
+    const isItemSelected = React.useCallback(
+        (city: string) => (selected ? city === selected : false),
+        [selected],
+    );
+
+    const onChangeText = React.useCallback(
+        (value: string) => {
+            const mathcing = items.find(option => option === value) || null;
+            updateResult(mathcing);
+            setSelected(mathcing);
+            setInputText(value);
+        },
+        [updateResult],
+    );
+
+    const onItemPress = React.useCallback(
+        (item: string) => {
+            const newValue = selected === item ? null : item;
+            setSelected(newValue);
+            updateResult(newValue);
+            setInputText(newValue ? newValue : '');
+        },
+        [selected, updateResult],
+    );
 
     return (
         <View style={CommonCardStyles.container}>
@@ -100,10 +110,12 @@ export default function InputCard(props: InputCard) {
                 name="map-marker"
                 color={Colors.accent}
             />
-            <Text style={styles.textStyles}>Из какого города стартуешь?</Text>
+            <Text style={styles.textStyles}>{caption}</Text>
             <View style={styles.searchControls}>
                 <TextInput
                     style={styles.searchControl}
+                    value={inputText}
+                    onChangeText={onChangeText}
                     placeholderTextColor={Colors.greyLight}
                     placeholder="Начни вводить место"
                 ></TextInput>
@@ -112,8 +124,13 @@ export default function InputCard(props: InputCard) {
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonsContainer}>
-                {cities.map((city, i) => (
-                    <CityButton key={i} city={city} />
+                {items.map(item => (
+                    <ToggleButton
+                        key={item}
+                        label={item}
+                        isSelected={isItemSelected(item)}
+                        onPress={() => onItemPress(item)}
+                    />
                 ))}
             </View>
         </View>
